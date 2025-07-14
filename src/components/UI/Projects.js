@@ -1,0 +1,235 @@
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import Tilt from 'react-parallax-tilt';
+import { FaGithub, FaExternalLinkAlt, FaCode } from 'react-icons/fa';
+import './Projects.scss';
+
+const Projects = () => {
+  const [activeModal, setActiveModal] = useState(null);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  
+  // Check if dark mode is enabled using the body class
+  useEffect(() => {
+    const checkDarkMode = () => {
+      const isDark = document.body.classList.contains('dark-mode');
+      setIsDarkMode(isDark);
+    };
+    
+    checkDarkMode();
+    
+    // Create a MutationObserver to watch for class changes on body
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          checkDarkMode();
+        }
+      });
+    });
+    
+    observer.observe(document.body, { attributes: true });
+    
+    return () => observer.disconnect();
+  }, []);
+
+  const projects = [
+    {
+      id: 1,
+      title: 'SPSU Marketplace',
+      description: 'A peer-to-peer campus item exchange platform allowing students to buy, sell, and trade items within the university community.',
+      image: 'https://res.cloudinary.com/durayngkx/image/upload/v1752251232/Screenshot_2025-07-11_215510_zv0ivz.png',
+      technologies: ['HTML', 'CSS', 'JavaScript', 'Node.js', 'MySQL'],
+      githubLink: '#',
+      demoLink: '#',
+      details: [
+        'Implemented user authentication and profile management',
+        'Created secure transaction system with messaging functionality',
+        'Designed responsive interface for mobile and desktop',
+        'Built RESTful API endpoints for frontend integration'
+      ]
+    },
+    {
+      id: 2,
+      title: 'Blockchain-based E-Waste Management',
+      description: 'An Ethereum-powered solution for tracking and managing electronic waste sustainably with transparent record-keeping.',
+      image: 'https://res.cloudinary.com/durayngkx/image/upload/v1752251208/Screenshot_2025-04-10_215513_m7ub8o.png',
+      technologies: ['Solidity', 'Ganache', 'MetaMask', 'HTML', 'CSS', 'JavaScript', 'Node.js'],
+      githubLink: '#',
+      demoLink: '#',
+      details: [
+        'Developed smart contracts for secure e-waste tracking',
+        'Integrated MetaMask for blockchain interactions',
+        'Created dashboard for visualizing waste flow and recycling metrics',
+        'Implemented reward system for responsible e-waste disposal'
+      ]
+    },
+    {
+      id: 3,
+      title: 'Appointment Scheduler',
+      description: 'An interactive web application for scheduling and managing appointments with a user-friendly interface. The platform offers separate dashboards for businesses and clients with real-time availability management.',
+      lightModeImage: 'https://res.cloudinary.com/durayngkx/image/upload/v1752249909/Screenshot_2025-07-11_213202_ygcn8g.png',
+      darkModeImage: 'https://res.cloudinary.com/durayngkx/image/upload/v1752249908/Screenshot_2025-07-11_213027_xfmxc1.png',
+      technologies: ['React.js', 'Node.js', 'Express', 'MongoDB', 'JWT Authentication'],
+      githubLink: 'https://github.com/anuragmishrash/appointment-scheduler',
+      demoLink: 'https://appointment-scheduler-drab.vercel.app/',
+      details: [
+        'User authentication and profile management',
+        'Business service and availability management',
+        'Appointment booking, rescheduling and tracking',
+        'Calendar integration with real-time updates',
+        'Responsive design for mobile and desktop'
+      ]
+    }
+  ];
+
+  const openModal = (id) => {
+    setActiveModal(id);
+    document.body.classList.add('modal-open');
+  };
+
+  const closeModal = () => {
+    setActiveModal(null);
+    document.body.classList.remove('modal-open');
+  };
+
+  // Close modal when escape key is pressed
+  useEffect(() => {
+    const handleEscKey = (event) => {
+      if (event.key === 'Escape') {
+        closeModal();
+      }
+    };
+
+    window.addEventListener('keydown', handleEscKey);
+    return () => {
+      window.removeEventListener('keydown', handleEscKey);
+    };
+  }, []);
+
+  return (
+    <section id="projects" className="projects section">
+      <div className="container">
+        <div className="section-title">
+          <h2>My Projects</h2>
+          <p>Some of my recent work that highlights my development skills and experience</p>
+        </div>
+
+        <div className="projects-grid">
+          {projects.map((project) => (
+            <Tilt
+              key={project.id}
+              className="tilt-wrapper"
+              tiltMaxAngleX={5}
+              tiltMaxAngleY={5}
+              perspective={1000}
+              transitionSpeed={1500}
+              scale={1.02}
+              glare
+              glareEnable={true}
+              glareMaxOpacity={0.2}
+              glareBorderRadius="10px"
+            >
+              <motion.div
+                className="project-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <div className="project-image">
+                  {project.id === 3 ? (
+                    <img 
+                      src={isDarkMode ? project.darkModeImage : project.lightModeImage} 
+                      alt={project.title} 
+                      className="real-image" 
+                    />
+                  ) : (
+                    <img src={project.image} alt={project.title} className="real-image" />
+                  )}
+                </div>
+                <div className="project-content">
+                  <h3>{project.title}</h3>
+                  <p>{project.description}</p>
+                  <div className="project-tech">
+                    {project.technologies.map((tech, index) => (
+                      <span key={index} className="tech-tag">{tech}</span>
+                    ))}
+                  </div>
+                  <div className="project-links">
+                    <button
+                      className="details-btn"
+                      onClick={() => openModal(project.id)}
+                    >
+                      <FaCode /> Details
+                    </button>
+                    <a href={project.githubLink} target="_blank" rel="noopener noreferrer">
+                      <FaGithub /> Code
+                    </a>
+                    <a href={project.demoLink} target="_blank" rel="noopener noreferrer">
+                      <FaExternalLinkAlt /> Demo
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            </Tilt>
+          ))}
+        </div>
+
+        {/* Project Modals */}
+        {activeModal !== null && (
+          <div className="modal-overlay" onClick={closeModal}>
+          <div
+              className="modal-content" 
+              onClick={(e) => e.stopPropagation()}
+          >
+              <button className="modal-close" onClick={closeModal}>×</button>
+              {projects.map((project) => (
+                project.id === activeModal && (
+                  <div key={`modal-content-${project.id}`}>
+              <h2>{project.title}</h2>
+                    <div className="modal-image">
+                      {project.id === 3 ? (
+                        <img 
+                          src={isDarkMode ? project.darkModeImage : project.lightModeImage} 
+                          alt={project.title} 
+                        />
+                      ) : (
+                        <img src={project.image} alt={project.title} />
+                      )}
+                    </div>
+              <p className="modal-description">{project.description}</p>
+              <div className="modal-details">
+                <h3>Key Features:</h3>
+                <ul>
+                  {project.details.map((detail, index) => (
+                    <li key={index}>{detail}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="modal-tech">
+                <h3>Technologies Used:</h3>
+                <div className="tech-tags">
+                  {project.technologies.map((tech, index) => (
+                    <span key={index} className="tech-tag">{tech}</span>
+                  ))}
+                </div>
+              </div>
+              <div className="modal-links">
+                <a href={project.githubLink} className="btn btn-outline" target="_blank" rel="noopener noreferrer">
+                  <FaGithub /> View on GitHub
+                </a>
+                <a href={project.demoLink} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                  <FaExternalLinkAlt /> Live Demo
+                </a>
+              </div>
+                  </div>
+                )
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
+export default Projects; 

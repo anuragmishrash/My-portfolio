@@ -1,0 +1,43 @@
+@import '../../assets/styles/variables';
+
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: $primary-color;
+  color: $white-color;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: $z-index-fixed;
+  box-shadow: $box-shadow-md;
+  transition: $transition-normal;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  &:hover {
+    background-color: darken($primary-color, 10%);
+    box-shadow: $box-shadow-lg;
+    transform: translateY(-5px);
+  }
+  
+  &:focus {
+    outline: none;
+  }
+  
+  svg {
+    font-size: $font-size-md;
+  }
+} 

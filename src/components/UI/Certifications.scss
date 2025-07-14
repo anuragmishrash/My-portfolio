@@ -1,0 +1,146 @@
+@import '../../assets/styles/variables';
+
+.certifications {
+  background-color: rgba($light-color, 0.5);
+  
+  .dark-mode & {
+    background-color: rgba($bg-dark, 0.3);
+  }
+  
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: $spacing-5;
+    
+    @media (max-width: $breakpoint-md) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  &-note {
+    margin-top: $spacing-6;
+    text-align: center;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    
+    p {
+      font-size: $font-size-sm;
+      color: $text-secondary;
+      
+      .dark-mode & {
+        color: rgba($text-light, 0.7);
+      }
+    }
+  }
+}
+
+.certification {
+  &-card {
+    display: flex;
+    gap: $spacing-4;
+    background-color: $white-color;
+    border-radius: $border-radius-md;
+    padding: $spacing-4;
+    box-shadow: $box-shadow-md;
+    transition: $transition-normal;
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: $box-shadow-lg;
+      
+      .view-certificate {
+        color: $primary-color;
+      }
+    }
+    
+    .dark-mode & {
+      background-color: rgba($white-color, 0.05);
+      box-shadow: none;
+      border: 1px solid rgba($white-color, 0.1);
+    }
+    
+    @media (max-width: $breakpoint-sm) {
+      flex-direction: column;
+      gap: $spacing-3;
+    }
+  }
+  
+  &-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    border-radius: 50%;
+    background-color: rgba($primary-color, 0.1);
+    color: $primary-color;
+    font-size: $font-size-xl;
+    
+    .placeholder-icon {
+      font-size: $font-size-lg;
+      font-weight: 700;
+    }
+  }
+  
+  &-content {
+    display: flex;
+    flex-direction: column;
+    
+    h3 {
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-1;
+      color: $dark-color;
+      
+      .dark-mode & {
+        color: $text-light;
+      }
+    }
+    
+    .issuer {
+      font-size: $font-size-sm;
+      color: $primary-color;
+      margin-bottom: $spacing-2;
+      font-weight: 500;
+    }
+    
+    .description {
+      font-size: $font-size-sm;
+      color: $text-secondary;
+      margin-bottom: $spacing-3;
+      
+      .dark-mode & {
+        color: rgba($text-light, 0.7);
+      }
+    }
+    
+    .view-certificate {
+      display: flex;
+      align-items: center;
+      gap: $spacing-1;
+      font-size: $font-size-sm;
+      font-weight: 500;
+      color: $text-secondary;
+      transition: $transition-fast;
+      margin-top: auto;
+      width: fit-content;
+      
+      &:hover {
+        color: $primary-color;
+      }
+      
+      svg {
+        font-size: 12px;
+      }
+      
+      .dark-mode & {
+        color: rgba($text-light, 0.6);
+        
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+} 

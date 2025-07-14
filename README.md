@@ -1,70 +1,121 @@
-# Getting Started with Create React App
+# Anurag Mishra Portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a professional portfolio website for Anurag Mishra, showcasing his skills, projects, and contact information.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Responsive design for all devices
+- Dark/Light mode theme
+- Interactive UI with animations using Framer Motion
+- Project showcase with detailed information
+- Skills section with progress bars
+- Contact form with email functionality
+- Resume download functionality
+- Profile image with modern styling
 
-### `npm start`
+## Setup Instructions
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Prerequisites
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Node.js (v14 or higher)
+- npm (v6 or higher)
 
-### `npm test`
+### Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository
+2. Install dependencies:
+   ```
+   npm install
+   ```
+3. Start the development server:
+   ```
+   npm start
+   ```
 
-### `npm run build`
+## How the Contact Form Works
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The contact form uses a simple but effective approach:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. When a user fills out the contact form and clicks "Send Message", the form data is formatted into a proper email format.
+2. The user's default email client opens automatically with a pre-filled email containing:
+   - To: itsanuragmishra99@gmail.com
+   - Subject: From the form or default to "Message from [Name]"
+   - Body: Formatted message with sender's name, email, and message content
+3. The user can review the email and send it through their email client.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This approach ensures you receive messages directly from the sender's email address, making it easier to reply to them.
 
-### `npm run eject`
+## Technologies Used
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- React
+- SCSS
+- Framer Motion
+- React Router DOM
+- React Icons
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Deployment
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+The site can be deployed on platforms like Netlify, Vercel, or GitHub Pages.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Project Structure
 
-## Learn More
+```
+src/
+├── assets/
+│   ├── images/
+│   └── styles/
+│       ├── global.scss
+│       └── variables.scss
+├── components/
+│   ├── layout/
+│   │   ├── Footer.js
+│   │   ├── Layout.js
+│   │   └── Navbar.js
+│   └── UI/
+│       ├── About.js
+│       ├── Contact.js
+│       ├── Hero.js
+│       ├── Projects.js
+│       ├── Skills.js
+│       └── Certifications.js
+├── contexts/
+│   └── ThemeContext.js
+├── pages/
+│   ├── AboutPage.js
+│   ├── ContactPage.js
+│   ├── HomePage.js
+│   ├── ProjectsPage.js
+│   └── SkillsPage.js
+├── App.js
+└── index.js
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Customization
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Changing Colors
 
-### Code Splitting
+The color scheme can be customized by editing the `src/assets/styles/variables.scss` file. Update the primary, secondary, and accent color values to match your desired palette.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Adding Projects
 
-### Analyzing the Bundle Size
+To add new projects, update the projects array in the `src/components/UI/Projects.js` file with your project details.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Updating Content
 
-### Making a Progressive Web App
+Most content can be updated by modifying the component files in the `src/components/UI/` directory. Resume data is contained within these components.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## License
 
-### Advanced Configuration
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Acknowledgments
 
-### Deployment
+- Design inspiration from various modern portfolio websites
+- Icons provided by [React Icons](https://react-icons.github.io/react-icons/)
+- Fonts from [Google Fonts](https://fonts.google.com/)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Contact
 
-### `npm run build` fails to minify
+Anurag Mishra - [itsanuragmishra99@gmail.com](mailto:itsanuragmishra99@gmail.com)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Project Link: [https://github.com/yourusername/portfolio](https://github.com/yourusername/portfolio)

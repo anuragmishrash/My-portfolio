@@ -1,0 +1,162 @@
+@import '../../assets/styles/variables';
+
+.about {
+  position: relative;
+  overflow: hidden;
+  
+  &-content {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: $spacing-6;
+    
+    @media (max-width: $breakpoint-lg) {
+      grid-template-columns: 1fr;
+      gap: $spacing-5;
+    }
+  }
+  
+  &-text {
+    h3 {
+      display: flex;
+      align-items: center;
+      gap: $spacing-2;
+      margin-bottom: $spacing-3;
+      color: $dark-color;
+      font-weight: 600;
+      
+      .dark-mode & {
+        color: $text-light;
+      }
+      
+      svg {
+        color: $primary-color;
+        margin-right: $spacing-1;
+      }
+    }
+    
+    p {
+      margin-bottom: $spacing-3;
+      line-height: 1.7;
+      color: $text-secondary;
+      
+      .dark-mode & {
+        color: rgba($text-light, 0.8);
+      }
+      
+      strong {
+        color: $primary-color;
+        font-weight: 600;
+      }
+    }
+  }
+  
+  .education-info {
+    margin: $spacing-5 0;
+    
+    .education-item {
+      margin-bottom: $spacing-4;
+      padding-left: $spacing-4;
+      border-left: 2px solid $primary-color;
+      position: relative;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -8px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background-color: $primary-color;
+      }
+      
+      h4 {
+        margin-bottom: $spacing-1;
+        font-weight: 500;
+      }
+      
+      p {
+        margin-bottom: $spacing-1;
+        font-size: $font-size-sm;
+      }
+    }
+  }
+  
+  &-buttons {
+    display: flex;
+    gap: $spacing-3;
+    margin-top: $spacing-5;
+    
+    @media (max-width: $breakpoint-sm) {
+      flex-direction: column;
+      gap: $spacing-2;
+      
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+  
+  &-boxes {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-4;
+  }
+  
+  &-box {
+    background-color: $white-color;
+    border-radius: $border-radius-md;
+    padding: $spacing-4;
+    box-shadow: $box-shadow-md;
+    transition: $transition-normal;
+    
+    .dark-mode & {
+      background-color: rgba($white-color, 0.05);
+      box-shadow: none;
+      border: 1px solid rgba($white-color, 0.1);
+    }
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: $box-shadow-lg;
+      
+      .box-icon {
+        background-color: $primary-color;
+        color: $white-color;
+      }
+    }
+    
+    .box-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: rgba($primary-color, 0.1);
+      color: $primary-color;
+      font-size: $font-size-xl;
+      margin-bottom: $spacing-3;
+      transition: $transition-fast;
+    }
+    
+    h4 {
+      margin-bottom: $spacing-2;
+      font-weight: 600;
+      
+      .dark-mode & {
+        color: $text-light;
+      }
+    }
+    
+    p {
+      color: $text-secondary;
+      font-size: $font-size-sm;
+      margin: 0;
+      
+      .dark-mode & {
+        color: rgba($text-light, 0.7);
+      }
+    }
+  }
+} 

@@ -1,0 +1,194 @@
+@import '../../assets/styles/variables';
+
+.contact {
+  position: relative;
+  
+  &-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: $spacing-6;
+    
+    @media (max-width: $breakpoint-md) {
+      grid-template-columns: 1fr;
+      gap: $spacing-5;
+    }
+  }
+  
+  &-info {
+    h3 {
+      margin-bottom: $spacing-3;
+      color: $dark-color;
+      position: relative;
+      display: inline-block;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        width: 40px;
+        height: 3px;
+        background-color: $primary-color;
+      }
+      
+      .dark-mode & {
+        color: $text-light;
+      }
+    }
+    
+    p {
+      margin-bottom: $spacing-4;
+      color: $text-secondary;
+      
+      .dark-mode & {
+        color: rgba($text-light, 0.7);
+      }
+    }
+  }
+  
+  .info-list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-3;
+    
+    li {
+      display: flex;
+      align-items: center;
+      gap: $spacing-3;
+      
+      .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        border-radius: 50%;
+        background-color: rgba($primary-color, 0.1);
+        color: $primary-color;
+        font-size: $font-size-md;
+      }
+      
+      .text {
+        a {
+          color: $text-primary;
+          transition: $transition-fast;
+          
+          &:hover {
+            color: $primary-color;
+          }
+          
+          .dark-mode & {
+            color: $text-light;
+          }
+        }
+      }
+    }
+  }
+  
+  &-form {
+    background-color: $white-color;
+    padding: $spacing-5;
+    border-radius: $border-radius-md;
+    box-shadow: $box-shadow-md;
+    
+    .dark-mode & {
+      background-color: rgba($white-color, 0.05);
+      box-shadow: none;
+      border: 1px solid rgba($white-color, 0.1);
+    }
+    
+    h3 {
+      margin-bottom: $spacing-4;
+      color: $dark-color;
+      position: relative;
+      display: inline-block;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        width: 40px;
+        height: 3px;
+        background-color: $primary-color;
+      }
+      
+      .dark-mode & {
+        color: $text-light;
+      }
+    }
+    
+    .form-message {
+      padding: $spacing-2 $spacing-3;
+      border-radius: $border-radius-sm;
+      margin-bottom: $spacing-4;
+      font-size: $font-size-sm;
+      
+      &.success {
+        background-color: rgba($success-color, 0.1);
+        color: $success-color;
+        border: 1px solid rgba($success-color, 0.2);
+      }
+      
+      &.error {
+        background-color: rgba(#dc3545, 0.1);
+        color: #dc3545;
+        border: 1px solid rgba(#dc3545, 0.2);
+      }
+    }
+    
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-3;
+    }
+    
+    .input-group {
+      width: 100%;
+      
+      input, textarea {
+        width: 100%;
+        padding: $spacing-3;
+        border: 1px solid rgba($text-secondary, 0.2);
+        border-radius: $border-radius-sm;
+        background-color: $white-color;
+        font-family: $font-primary;
+        font-size: $font-size-sm;
+        transition: $transition-fast;
+        
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+          box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
+        }
+        
+        .dark-mode & {
+          background-color: rgba($white-color, 0.05);
+          border-color: rgba($white-color, 0.1);
+          color: $text-light;
+          
+          &::placeholder {
+            color: rgba($text-light, 0.5);
+          }
+          
+          &:focus {
+            border-color: $primary-color;
+            box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+          }
+        }
+      }
+      
+      textarea {
+        min-height: 150px;
+        resize: vertical;
+      }
+    }
+    
+    button[type="submit"] {
+      margin-top: $spacing-2;
+      align-self: flex-start;
+      padding: $spacing-2 $spacing-5;
+    }
+  }
+} 

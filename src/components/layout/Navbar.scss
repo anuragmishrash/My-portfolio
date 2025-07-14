@@ -1,0 +1,187 @@
+@import '../../assets/styles/variables';
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: $z-index-fixed;
+  padding: $spacing-4 0;
+  transition: $transition-normal;
+  background-color: transparent;
+  
+  &.scrolled {
+    background-color: rgba($white-color, 0.95);
+    box-shadow: $box-shadow-sm;
+    padding: $spacing-2 0;
+    
+    .dark-mode & {
+      background-color: rgba($bg-dark, 0.95);
+      box-shadow: $box-shadow-md;
+    }
+  }
+  
+  &-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  &-logo {
+    h2 {
+      margin: 0;
+      font-size: $font-size-xl;
+      font-weight: 700;
+      color: $primary-color;
+    }
+  }
+  
+  &-links {
+    display: flex;
+    gap: $spacing-5;
+    
+    li {
+      a {
+        color: $text-primary;
+        font-weight: 500;
+        position: relative;
+        
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: -4px;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background-color: $primary-color;
+          transition: $transition-fast;
+        }
+        
+        &:hover {
+          color: $primary-color;
+          
+          &:after {
+            width: 100%;
+          }
+        }
+        
+        .dark-mode & {
+          color: $text-light;
+          
+          &:hover {
+            color: $primary-color;
+          }
+        }
+      }
+    }
+  }
+  
+  &-actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+  }
+  
+  .theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: $font-size-lg;
+    color: $text-primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-1;
+    border-radius: 50%;
+    transition: $transition-fast;
+    
+    &:hover {
+      background-color: rgba($primary-color, 0.1);
+      color: $primary-color;
+    }
+    
+    .dark-mode & {
+      color: $text-light;
+      
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+  
+  &-toggle, &-close {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: $font-size-lg;
+    color: $text-primary;
+    
+    .dark-mode & {
+      color: $text-light;
+    }
+  }
+}
+
+@media screen and (max-width: $breakpoint-lg) {
+  .navbar {
+    &-links {
+      gap: $spacing-4;
+    }
+  }
+}
+
+@media screen and (max-width: $breakpoint-md) {
+  .navbar {
+    &-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    &-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 80%;
+      max-width: 300px;
+      height: 100vh;
+      background-color: $white-color;
+      box-shadow: $box-shadow-lg;
+      transition: $transition-normal;
+      z-index: $z-index-fixed + 1;
+      padding: $spacing-6;
+      
+      .dark-mode & {
+        background-color: $bg-dark;
+      }
+      
+      &.active {
+        right: 0;
+      }
+    }
+    
+    &-close {
+      display: block;
+      position: absolute;
+      top: $spacing-4;
+      right: $spacing-4;
+      font-size: $font-size-xl;
+    }
+    
+    &-links {
+      flex-direction: column;
+      gap: $spacing-4;
+      margin-top: $spacing-6;
+      
+      li {
+        width: 100%;
+        
+        a {
+          display: block;
+          padding: $spacing-2;
+        }
+      }
+    }
+  }
+} 
