@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowUp } from 'react-icons/fa';
 import './BackToTop.scss';
 
@@ -6,7 +7,6 @@ const BackToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   // Show button when page is scrolled down
-  useEffect(() => {
     const toggleVisibility = () => {
       if (window.pageYOffset > 300) {
         setIsVisible(true);
@@ -15,12 +15,16 @@ const BackToTop = () => {
       }
     };
 
+  // Set the scroll event listener
+  useEffect(() => {
     window.addEventListener('scroll', toggleVisibility);
 
-    return () => window.removeEventListener('scroll', toggleVisibility);
+    return () => {
+      window.removeEventListener('scroll', toggleVisibility);
+    };
   }, []);
 
-  // Scroll to top on click
+  // Scroll to top handler
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -29,13 +33,32 @@ const BackToTop = () => {
   };
 
   return (
-    <button
-      className={`back-to-top ${isVisible ? 'visible' : ''}`}
+    <AnimatePresence>
+      {isVisible && (
+        <motion.button 
+          className="back-to-top" 
       onClick={scrollToTop}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          transition={{ duration: 0.3 }}
       aria-label="Back to top"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <motion.div
+            animate={{ y: [0, -5, 0] }}
+            transition={{ 
+              repeat: Infinity, 
+              repeatType: "reverse", 
+              duration: 1.5 
+            }}
     >
       <FaArrowUp />
-    </button>
+          </motion.div>
+        </motion.button>
+      )}
+    </AnimatePresence>
   );
 };
 

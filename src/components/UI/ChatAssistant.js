@@ -1,89 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaRobot, FaPaperPlane, FaTimes } from 'react-icons/fa';
+import { FaRobot, FaTimes, FaPaperPlane } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
 import './ChatAssistant.scss';
+import { knowledgeBase } from '../../utils/chatbotData';
 
 const ChatAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { 
-      text: "Hi there! I'm Anurag's portfolio assistant. Ask me anything about Anurag's skills, projects, or experience! You can also navigate the site by typing 'navigate to [section]'", 
-      isBot: true 
-    }
+    { text: "Hi there! I'm Anurag's portfolio assistant. How can I help you today?", isBot: true }
   ]);
   const [inputValue, setInputValue] = useState('');
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
-  // Knowledge base about Anurag's portfolio
-  const knowledgeBase = {
-    // Personal info
-    name: "Anurag Mishra",
-    role: "Computer Science Undergraduate",
-    about: "I'm a full-stack developer with experience in cybersecurity and AI integration. Currently pursuing B.Tech at SPSU, Udaipur with a focus on creating modern web applications.",
-    
-    // Projects
-    projects: [
-      {
-        name: "Appointment Scheduler",
-        description: "An interactive web application for scheduling and managing appointments with a user-friendly interface. The platform offers separate dashboards for businesses and clients with real-time availability management.",
-        technologies: ["React.js", "Node.js", "Express", "MongoDB", "JWT Authentication"],
-        features: [
-          "User authentication and profile management",
-          "Business service and availability management",
-          "Appointment booking, rescheduling and tracking",
-          "Calendar integration with real-time updates",
-          "Responsive design for mobile and desktop"
-        ]
-      },
-      {
-        name: "SPSU Marketplace",
-        description: "A peer-to-peer campus item exchange platform allowing students to buy, sell, and trade items within the university community.",
-        technologies: ["HTML", "CSS", "JavaScript", "Node.js", "MySQL"],
-        features: [
-          "Implemented user authentication and profile management",
-          "Created secure transaction system with messaging functionality",
-          "Designed responsive interface for mobile and desktop",
-          "Built RESTful API endpoints for frontend integration"
-        ]
-      },
-      {
-        name: "Blockchain-based E-Waste Management",
-        description: "An Ethereum-powered solution for tracking and managing electronic waste sustainably with transparent record-keeping.",
-        technologies: ["Solidity", "Ganache", "MetaMask", "HTML", "CSS", "JavaScript", "Node.js"],
-        features: [
-          "Developed smart contracts for secure e-waste tracking",
-          "Integrated MetaMask for blockchain interactions",
-          "Created dashboard for visualizing waste flow and recycling metrics",
-          "Implemented reward system for responsible e-waste disposal"
-        ]
-      }
-    ],
-    
-    // Skills categorized
-    skills: {
-      languages: ["JavaScript", "C++", "Java", "Python", "HTML/CSS", "Solidity"],
-      technologies: ["React.js", "Node.js", "Express.js", "MongoDB", "MySQL", "RESTful APIs", "Web3.js", "AI/ML Integration"],
-      tools: ["MERN Stack", "Git", "GitHub", "VS Code", "Postman", "Blockchain", "Web3", "TensorFlow", "NPM", "Webpack", "Docker", "Heroku", "Vercel", "AWS"],
-      soft: ["Problem Solving", "Communication", "Team Collaboration", "Time Management"]
-    },
-    
-    // Contact information
-    contact: {
-      email: "itsanuragmishra99@gmail.com",
-      linkedin: "https://www.linkedin.com/in/anurag-mishra",
-      github: "https://github.com/anuragmishrash",
-    }
-  };
-
-  // Scroll to bottom of chat whenever messages change
+  // Scroll to bottom when messages change
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
-  // Focus input when chat opens
+  // Focus input when chat is opened
   useEffect(() => {
-    if (isOpen && inputRef.current) {
-      inputRef.current.focus();
+    if (isOpen) {
+      inputRef.current?.focus();
     }
   }, [isOpen]);
 
@@ -238,58 +176,112 @@ const ChatAssistant = () => {
 
   return (
     <>
-      <button 
-        className={`chat-toggle ${isOpen ? 'active' : ''}`}
-        onClick={toggleChat}
-        aria-label="Toggle chat assistant"
-      >
-        <FaRobot />
-      </button>
-      
-      <div className={`chat-assistant ${isOpen ? 'open' : ''}`}>
-        <div className="chat-header">
-          <div className="chat-title">
+      <AnimatePresence>
+        <motion.button 
+          className={`chat-toggle ${isOpen ? 'active' : ''}`}
+          onClick={toggleChat}
+          aria-label="Toggle chat assistant"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <motion.div
+            animate={{
+              scale: [1, 1.1, 1],
+            }}
+            transition={{
+              duration: 2,
+              ease: "easeInOut",
+              repeat: Infinity,
+              repeatDelay: 3
+            }}
+          >
             <FaRobot />
-            <span>Portfolio Assistant</span>
-          </div>
-          <button className="close-btn" onClick={toggleChat}>
-            <FaTimes />
-          </button>
-        </div>
-        
-        <div className="chat-messages">
-          {messages.map((message, index) => (
-            <div 
-              key={index} 
-              className={`message ${message.isBot ? 'bot' : 'user'}`}
-            >
-              {message.isBot && <div className="bot-icon"><FaRobot /></div>}
-              <div className="message-content">
-                {message.text.split('\n').map((line, i) => (
-                  <React.Fragment key={i}>
-                    {line}
-                    {i < message.text.split('\n').length - 1 && <br />}
-                  </React.Fragment>
-                ))}
+          </motion.div>
+        </motion.button>
+      </AnimatePresence>
+      
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            className="chat-assistant open"
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="chat-header">
+              <div className="chat-title">
+                <motion.div
+                  animate={{ 
+                    rotate: [0, 15, 0, -15, 0],
+                  }}
+                  transition={{ 
+                    duration: 1.5, 
+                    repeat: Infinity,
+                    repeatDelay: 3
+                  }}
+                >
+                  <FaRobot />
+                </motion.div>
+                <span>Portfolio Assistant</span>
               </div>
+              <button className="close-btn" onClick={toggleChat}>
+                <FaTimes />
+              </button>
             </div>
-          ))}
-          <div ref={messagesEndRef} />
-        </div>
-        
-        <form className="chat-input" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Ask me about Anurag's skills or type 'navigate to projects'..."
-            value={inputValue}
-            onChange={handleInputChange}
-            ref={inputRef}
-          />
-          <button type="submit" className="send-button">
-            <FaPaperPlane />
-          </button>
-        </form>
-      </div>
+            
+            <div className="chat-messages">
+              {messages.map((message, index) => (
+                <motion.div 
+                  key={index} 
+                  className={`message ${message.isBot ? 'bot' : 'user'}`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {message.isBot && (
+                    <motion.div 
+                      className="bot-icon"
+                      initial={{ rotate: -30 }}
+                      animate={{ rotate: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <FaRobot />
+                    </motion.div>
+                  )}
+                  <div className="message-content">
+                    {message.text.split('\n').map((line, i) => (
+                      <React.Fragment key={i}>
+                        {line}
+                        {i < message.text.split('\n').length - 1 && <br />}
+                      </React.Fragment>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+              <div ref={messagesEndRef} />
+            </div>
+            
+            <form className="chat-input" onSubmit={handleSubmit}>
+              <input
+                type="text"
+                placeholder="Ask me about Anurag's skills or type 'navigate to projects'..."
+                value={inputValue}
+                onChange={handleInputChange}
+                ref={inputRef}
+              />
+              <motion.button 
+                type="submit" 
+                className="send-button"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <FaPaperPlane />
+              </motion.button>
+            </form>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

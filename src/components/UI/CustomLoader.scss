@@ -1,0 +1,197 @@
+.custom-loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.custom-loader-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 200px;
+}
+
+.custom-loader {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin: 0 5px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  box-shadow: 0 0 10px var(--primary-color);
+  
+  &:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+  
+  &:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+  
+  &:nth-child(4) {
+    animation-delay: 0.3s;
+  }
+  
+  &:nth-child(5) {
+    animation-delay: 0.4s;
+  }
+}
+
+.ring {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  
+  .path {
+    stroke: url(#gradient);
+    stroke-linecap: round;
+    animation: ring 1.5s ease-in-out infinite;
+  }
+  
+  @keyframes ring {
+    0% {
+      stroke-dasharray: 1, 150;
+      stroke-dashoffset: 0;
+    }
+    50% {
+      stroke-dasharray: 90, 150;
+      stroke-dashoffset: -35;
+    }
+    100% {
+      stroke-dasharray: 90, 150;
+      stroke-dashoffset: -124;
+    }
+  }
+  
+  // SVG gradient definition (applied via JavaScript)
+  &:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+}
+
+.pulse-circle {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgba(110, 87, 224, 0.1);
+  animation: pulse 2s infinite;
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(0.8);
+      opacity: 0.7;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0.3;
+    }
+    100% {
+      transform: scale(0.8);
+      opacity: 0.7;
+    }
+  }
+}
+
+.loader-text {
+  margin-top: 30px;
+  display: flex;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  letter-spacing: 1px;
+  
+  span {
+    display: inline-block;
+    margin: 0 1px;
+  }
+}
+
+// Code animation in background
+.code-animation {
+  position: absolute;
+  top: -100px;
+  left: -150px;
+  width: 500px;
+  height: 400px;
+  z-index: -1;
+  opacity: 0.15;
+  overflow: hidden;
+  
+  .code-line {
+    height: 10px;
+    background: linear-gradient(to right, var(--primary-color), transparent);
+    margin: 10px 0;
+    border-radius: 3px;
+    opacity: 0;
+    animation: fadeInOut 3s ease-in-out infinite;
+    
+    @keyframes fadeInOut {
+      0% {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+      10%, 90% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+    }
+  }
+}
+
+// Media queries
+@media (max-width: 768px) {
+  .custom-loader-container {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .dot {
+    width: 10px;
+    height: 10px;
+    margin: 0 4px;
+  }
+  
+  .ring {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .pulse-circle {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .loader-text {
+    font-size: 14px;
+  }
+}
+
+// Add SVG gradient to the DOM via JavaScript
+// This will be added automatically when the component mounts
+:root {
+  --loader-gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+} 

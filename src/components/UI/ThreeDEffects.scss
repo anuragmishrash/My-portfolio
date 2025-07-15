@@ -1,0 +1,271 @@
+@import '../../assets/styles/variables';
+
+.three-d-container {
+  margin: 3rem auto;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1rem;
+  
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .three-d-description {
+    text-align: center;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    color: var(--text-secondary-color);
+  }
+  
+  .canvas-container {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(145deg, rgba(0, 0, 0, 0.7), rgba(20, 20, 40, 0.9));
+    margin-bottom: 1.5rem;
+    
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 15px;
+      border: 1px solid rgba(var(--primary-color-rgb), 0.3);
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .skills-canvas {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .dark-mode & {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  .controls-info {
+    background-color: rgba(var(--primary-color-rgb), 0.1);
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    margin-top: 1rem;
+    
+    p {
+      color: var(--text-color);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      
+      span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: var(--primary-color);
+        font-weight: 500;
+      }
+    }
+    
+    .dark-mode & {
+      background-color: rgba(var(--primary-color-rgb), 0.15);
+    }
+  }
+}
+
+// Loading indicator
+.loading-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(145deg, rgba(0, 0, 0, 0.7), rgba(20, 20, 40, 0.9));
+  border-radius: 15px;
+  color: white;
+  
+  p {
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #fff;
+    text-align: center;
+  }
+  
+  &:after {
+    content: '';
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(var(--primary-color-rgb), 0.3);
+    border-radius: 50%;
+    border-top-color: var(--primary-color);
+    animation: spin 1s linear infinite;
+    margin-top: 1rem;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+}
+
+// Fallback content when WebGL is not supported
+.three-d-fallback {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: white;
+  text-align: center;
+  
+  h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    max-width: 80%;
+    
+    .skill-item {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(var(--primary-color-rgb), 0.5);
+      padding: 0.7rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 500;
+      color: white;
+      animation: fadeInUp 0.5s forwards;
+      opacity: 0;
+      transform: translateY(20px);
+      
+      &:hover {
+        background: rgba(var(--primary-color-rgb), 0.3);
+        transform: translateY(-5px);
+        transition: all 0.3s ease;
+      }
+    }
+  }
+  
+  p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Media queries
+@media (max-width: 768px) {
+  .three-d-container {
+    h2 {
+      font-size: 1.8rem;
+    }
+    
+    .canvas-container {
+      height: 400px;
+    }
+    
+    .controls-info {
+      padding: 0.8rem 1.5rem;
+      
+      p {
+        font-size: 0.8rem;
+        gap: 0.8rem;
+      }
+    }
+  }
+  
+  .three-d-fallback {
+    h3 {
+      font-size: 1.5rem;
+    }
+    
+    .skills-grid {
+      max-width: 95%;
+      
+      .skill-item {
+        padding: 0.5rem 1.2rem;
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .three-d-container {
+    h2 {
+      font-size: 1.5rem;
+    }
+    
+    .three-d-description {
+      font-size: 0.9rem;
+    }
+    
+    .canvas-container {
+      height: 350px;
+    }
+    
+    .controls-info {
+      width: 100%;
+      border-radius: 10px;
+      padding: 0.7rem 1rem;
+      
+      p {
+        font-size: 0.7rem;
+        gap: 0.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+        
+        span {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    }
+  }
+  
+  .three-d-fallback {
+    padding: 1rem;
+    
+    h3 {
+      font-size: 1.3rem;
+    }
+    
+    .skills-grid {
+      gap: 0.7rem;
+      
+      .skill-item {
+        padding: 0.4rem 1rem;
+        font-size: 0.8rem;
+      }
+    }
+  }
+} 

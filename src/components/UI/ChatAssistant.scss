@@ -14,18 +14,28 @@
   border: none;
   cursor: pointer;
   box-shadow: 0 4px 15px rgba(108, 99, 255, 0.4);
-  z-index: 999;
-  transition: all 0.3s ease;
+  z-index: 998; // Lower z-index than back-to-top
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
   font-size: 1.5rem;
+  animation: chat-pulse 2s infinite ease-in-out;
   
   &:hover {
-    transform: scale(1.05);
+    background-color: #5a52d5;
     box-shadow: 0 6px 20px rgba(108, 99, 255, 0.5);
   }
   
   &.active {
-    transform: scale(0.9);
     background-color: #5a52d5;
+    animation: none;
+  }
+  
+  svg {
+    // Adding a subtle rotation effect
+    transition: transform 0.3s ease;
+  }
+  
+  &:hover svg {
+    transform: rotate(15deg);
   }
   
   .dark-mode & {
@@ -33,6 +43,7 @@
     box-shadow: 0 4px 15px rgba(138, 128, 255, 0.4);
     
     &:hover {
+      background-color: #7A70FF;
       box-shadow: 0 6px 20px rgba(138, 128, 255, 0.5);
     }
     
@@ -42,6 +53,22 @@
   }
 }
 
+// Adding keyframes for the chat button pulse
+@keyframes chat-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(108, 99, 255, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(108, 99, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(108, 99, 255, 0);
+  }
+}
+
+// Removed the subtle-pulse keyframes animation
+
+// Fix z-index and animations for chat assistant
 .chat-assistant {
   position: fixed;
   bottom: 6.5rem;
@@ -56,16 +83,16 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  z-index: 998;
+  z-index: 997; // Lower than toggle and back-to-top
   visibility: hidden;
   opacity: 0;
-  transform: translateY(20px) scale(0.95);
-  transition: all 0.3s ease;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
   
   &.open {
     visibility: visible;
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
   
   .dark-mode & {

@@ -1,0 +1,173 @@
+// Animated Element Styles
+.animated-element {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  
+  &.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1.5rem;
+    border-radius: 30px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    font-weight: 600;
+    
+    .particle-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      
+      .particle {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+      }
+    }
+  }
+  
+  &.link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    
+    svg {
+      margin-left: 5px;
+      transition: transform 0.2s;
+    }
+    
+    &:hover svg {
+      transform: translateX(3px);
+    }
+  }
+  
+  &.icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(var(--primary-color-rgb), 0.1);
+    color: var(--primary-color);
+    transition: background-color 0.3s;
+    
+    &:hover {
+      background-color: rgba(var(--primary-color-rgb), 0.2);
+    }
+  }
+  
+  &.card {
+    border-radius: 10px;
+    background-color: var(--bg-color);
+    padding: 1.5rem;
+    width: 100%;
+  }
+}
+
+// Animated Text Styles
+.animated-text {
+  display: inline-flex;
+  flex-wrap: wrap;
+  
+  &.heading {
+    font-size: inherit;
+    font-weight: inherit;
+    
+    .animated-char {
+      display: inline-block;
+      white-space: pre;
+    }
+  }
+  
+  &.paragraph {
+    font-size: inherit;
+    line-height: 1.6;
+    
+    .animated-word {
+      display: inline-block;
+      margin-right: 0.25em;
+    }
+  }
+}
+
+// Animated Card Styles
+.animated-card {
+  position: relative;
+  border-radius: 10px;
+  background-color: var(--bg-color);
+  padding: 1.5rem;
+  width: 100%;
+  overflow: hidden;
+  
+  .card-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle at center,
+      rgba(var(--primary-color-rgb), 0.1) 0%,
+      rgba(var(--primary-color-rgb), 0) 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  & > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// Animated Icon Styles
+.animated-icon {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  
+  .icon-pulse {
+    position: absolute;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  
+  svg, img {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// Media Queries
+@media (max-width: 768px) {
+  .animated-text {
+    &.heading {
+      font-size: 0.9em;
+    }
+    
+    &.paragraph {
+      font-size: 0.9em;
+    }
+  }
+}
+
+// Accessibility - disable animations if user prefers reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .animated-element, 
+  .animated-text,
+  .animated-card,
+  .animated-icon {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+} 

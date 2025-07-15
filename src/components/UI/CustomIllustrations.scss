@@ -1,0 +1,65 @@
+.illustration {
+  width: 100%;
+  height: auto;
+  max-width: 300px;
+  margin: 0 auto;
+  
+  svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  &.web-dev, &.mobile-dev, &.data-science, &.design {
+    transition: transform 0.3s ease;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// Specific styling for each illustration type
+.web-dev {
+  svg {
+    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.1));
+  }
+}
+
+.mobile-dev {
+  svg {
+    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.1));
+  }
+}
+
+.data-science {
+  svg {
+    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.1));
+  }
+}
+
+.design {
+  svg {
+    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.1));
+  }
+}
+
+// Media queries
+@media (max-width: 768px) {
+  .illustration {
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .illustration {
+    max-width: 150px;
+  }
+}
+
+// For dark mode compatibility
+@media (prefers-color-scheme: dark) {
+  .illustration svg {
+    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.3));
+  }
+} 
