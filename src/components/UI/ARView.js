@@ -8,6 +8,7 @@ const ARView = ({ projects }) => {
   const [isARActive, setIsARActive] = useState(false);
   const [error, setError] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [cameraPermissionDenied, setCameraPermissionDenied] = useState(false);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -43,6 +44,9 @@ const ARView = ({ projects }) => {
         setIsARSupported(true);
       } catch (err) {
         console.error("AR support check failed:", err);
+        if (err.name === 'NotAllowedError') {
+          setCameraPermissionDenied(true);
+        }
         setIsARSupported(false);
       }
     };
@@ -83,40 +87,52 @@ const ARView = ({ projects }) => {
         }
       };
       
-      const stream = await navigator.mediaDevices.getUserMedia(constraints);
-      
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        
-        // Handle video loading
-        videoRef.current.onloadedmetadata = () => {
-          videoRef.current.play().catch(e => {
-            console.error("Video play error:", e);
-            setError("Couldn't start video stream. Please check camera permissions.");
-          });
-        };
-        
-        // Set up canvas for AR rendering
-        if (canvasRef.current) {
-          setupCanvas();
+      // Add a small delay before requesting camera access to ensure UI is ready
+      setTimeout(async () => {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia(constraints);
+          
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+            
+            // Handle video loading
+            videoRef.current.onloadedmetadata = () => {
+              videoRef.current.play().catch(e => {
+                console.error("Video play error:", e);
+                setError("Couldn't start video stream. Please check camera permissions.");
+              });
+            };
+            
+            // Set up canvas for AR rendering
+            if (canvasRef.current) {
+              setupCanvas();
+            }
+          }
+        } catch (error) {
+          handleCameraError(error);
         }
-      }
+      }, 300);
     } catch (error) {
-      console.error('Error starting AR:', error);
-      
-      // Provide more specific error messages
-      if (error.name === 'NotAllowedError') {
-        setError("Camera access denied. Please allow camera permissions in your browser settings.");
-      } else if (error.name === 'NotFoundError') {
-        setError("No camera found on your device.");
-      } else if (error.name === 'NotReadableError') {
-        setError("Camera is already in use by another application.");
-      } else {
-        setError("Couldn't access camera. Please check permissions and try again.");
-      }
-      
-      setIsARActive(false);
+      handleCameraError(error);
     }
+  };
+
+  const handleCameraError = (error) => {
+    console.error('Error starting AR:', error);
+    
+    // Provide more specific error messages
+    if (error.name === 'NotAllowedError') {
+      setError("Camera access denied. Please allow camera permissions in your browser settings.");
+      setCameraPermissionDenied(true);
+    } else if (error.name === 'NotFoundError') {
+      setError("No camera found on your device.");
+    } else if (error.name === 'NotReadableError') {
+      setError("Camera is already in use by another application.");
+    } else {
+      setError("Couldn't access camera. Please check permissions and try again.");
+    }
+    
+    setIsARActive(false);
   };
 
   // Setup desktop-specific AR view with simulated content
@@ -380,7 +396,9 @@ const ARView = ({ projects }) => {
         <h3>AR View Not Available</h3>
         <p>
           {isMobile 
-            ? "Your device doesn't support the camera features needed for AR. This might be due to browser restrictions or hardware limitations."
+            ? cameraPermissionDenied 
+              ? "Camera access was denied. Please allow camera permissions in your browser settings and refresh the page."
+              : "Your device doesn't support the camera features needed for AR. This might be due to browser restrictions or hardware limitations."
             : "Full AR View works best on mobile devices with camera access. You can still try the desktop version with limited features."}
         </p>
         
@@ -393,6 +411,7 @@ const ARView = ({ projects }) => {
               <li>Try using Chrome or Safari browsers</li>
               <li>Make sure your device supports WebRTC</li>
               <li>If possible, access the site using HTTPS</li>
+              <li>Try refreshing the page after granting permissions</li>
             </ol>
           </div>
         )}
@@ -493,7 +512,7 @@ const ARView = ({ projects }) => {
               autoPlay 
               playsInline
               muted
-              style={{ display: 'none' }}
+              style={{ display: isMobile ? 'none' : 'block' }}
             />
             <canvas 
               ref={canvasRef} 
