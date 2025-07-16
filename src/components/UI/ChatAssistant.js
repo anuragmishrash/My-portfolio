@@ -38,7 +38,7 @@ const ChatAssistant = () => {
     else if (commandLower.includes("contact")) section = "contact";
     else if (commandLower.includes("resume")) {
       // Open resume in new tab
-      window.open('resume.pdf', '_blank');
+      window.open('Anurag Mishra Resume.pdf', '_blank');
       return "Opening resume in a new tab";
     }
     
