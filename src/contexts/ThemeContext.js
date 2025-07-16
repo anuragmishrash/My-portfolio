@@ -1,9 +1,10 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 
 export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   // Check if user has previously set theme preference
   useEffect(() => {
@@ -14,10 +15,16 @@ export const ThemeProvider = ({ children }) => {
       setIsDarkMode(true);
       document.body.classList.add('dark-mode');
     }
+    
+    // Set CSS variables for theme transition
+    document.documentElement.style.setProperty('--theme-transition', 'all 0.5s ease');
   }, []);
 
-  // Toggle theme
+  // Toggle theme with transition
   const toggleTheme = () => {
+    setIsTransitioning(true);
+    
+    setTimeout(() => {
     setIsDarkMode(!isDarkMode);
     
     if (!isDarkMode) {
@@ -27,13 +34,21 @@ export const ThemeProvider = ({ children }) => {
       document.body.classList.remove('dark-mode');
       localStorage.setItem('theme', 'light');
     }
+      
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 500);
+    }, 50);
   };
 
   return (
-    <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
+    <ThemeContext.Provider value={{ isDarkMode, toggleTheme, isTransitioning }}>
       {children}
     </ThemeContext.Provider>
   );
 };
+
+// Custom hook for easy theme access
+export const useTheme = () => useContext(ThemeContext);
 
 export default ThemeProvider; 

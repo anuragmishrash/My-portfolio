@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaSun, FaMoon, FaBars, FaTimes } from 'react-icons/fa';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import './Navbar.scss';
@@ -8,6 +8,8 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -44,12 +46,39 @@ const Navbar = () => {
     e.stopPropagation();
   };
 
+  // Scroll to top function with improved navigation
+  const scrollToTop = (e) => {
+    e.preventDefault();
+    
+    // If already on home page, just scroll to top
+    if (location.pathname === '/') {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      // If on another page, navigate to home and then scroll to top
+      navigate('/');
+      // Use setTimeout to ensure navigation completes before scrolling
+      setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }, 100);
+    }
+  };
+
   return (
     <header className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="container navbar-container">
-        <Link to="/" className="navbar-logo">
+        <a 
+          href="/"
+          className="navbar-logo"
+          onClick={scrollToTop}
+        >
           <h2>Anurag Mishra</h2>
-        </Link>
+        </a>
 
         <div className={`navbar-menu ${isMenuOpen ? 'active' : ''}`} onClick={handleMenuClick}>
           <button className="navbar-close" onClick={toggleMenu}>

@@ -1,9 +1,8 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Tilt from 'react-parallax-tilt';
-import { FaGithub, FaExternalLinkAlt, FaCode, FaVrCardboard, FaCube } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaCode, FaCube } from 'react-icons/fa';
 import './Projects.scss';
-import ARView from './ARView';
 import { WebDevIllustration, MobileDevIllustration } from './CustomIllustrations';
 import MicroAnimations from './MicroAnimations';
 
@@ -13,8 +12,20 @@ const ThreeDEffects = React.lazy(() => import('./ThreeDEffects'));
 const Projects = () => {
   const [activeModal, setActiveModal] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [showAR, setShowAR] = useState(false);
   const [show3D, setShow3D] = useState(false);
+  
+  // Define skills exactly as they appear in the Skills component, but remove Git, Webpack, Docker, Heroku, Python, and AWS
+  const skills = [
+    // Programming Languages
+    'JavaScript', 'C++', 'Java', 'HTML/CSS', 'Solidity',
+    
+    // Technologies & Frameworks
+    'React.js', 'Node.js', 'Express.js', 'MongoDB', 'MySQL', 'RESTful APIs', 'Web3.js', 'AI/ML Integration',
+    
+    // Tools & Ecosystems
+    'MERN Stack', 'GitHub', 'VS Code', 'Postman', 'Blockchain', 'Web3', 'TensorFlow', 'NPM', 
+    'Vercel'
+  ];
   
   // Check if dark mode is enabled using the body class
   useEffect(() => {
@@ -126,16 +137,9 @@ const Projects = () => {
     };
   }, []);
 
-  // Toggle AR view
-  const toggleAR = () => {
-    setShowAR(prev => !prev);
-    setShow3D(false);
-  };
-
   // Toggle 3D view
   const toggle3D = () => {
     setShow3D(prev => !prev);
-    setShowAR(false);
   };
 
   return (
@@ -154,47 +158,33 @@ const Projects = () => {
 
         <div className="view-toggles">
           <MicroAnimations.AnimatedElement type="button">
-            <button className={`view-toggle-btn ${showAR ? 'active' : ''}`} onClick={toggleAR}>
-              <FaVrCardboard /> AR View
-            </button>
-          </MicroAnimations.AnimatedElement>
-          
-          <MicroAnimations.AnimatedElement type="button">
             <button className={`view-toggle-btn ${show3D ? 'active' : ''}`} onClick={toggle3D}>
-              <FaCube /> 3D View
+              <FaCube /> {show3D ? 'Hide 3D Skills View' : 'Show 3D Skills View'}
             </button>
           </MicroAnimations.AnimatedElement>
         </div>
 
-        <AnimatePresence mode="wait">
-          {showAR && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <ARView projects={projects} />
-            </motion.div>
-          )}
-
+        {/* 3D View Section - Always render but conditionally show */}
+        <AnimatePresence>
           {show3D && (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              className="threed-section"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.5 }}
             >
               <Suspense fallback={<div className="loading-placeholder">Loading 3D View...</div>}>
-                <ThreeDEffects skills={projects.flatMap(p => p.technologies)} />
+                <ThreeDEffects skills={skills} />
               </Suspense>
             </motion.div>
           )}
+        </AnimatePresence>
 
-          {!showAR && !show3D && (
+        {/* Projects Grid - Always visible */}
         <div className="projects-grid">
-              {projects.map((project, index) => (
-                <MicroAnimations.AnimatedCard key={project.id} delay={index}>
+          {projects.map((project, index) => (
+            <MicroAnimations.AnimatedCard key={project.id} delay={index}>
             <Tilt
               className="tilt-wrapper"
               tiltMaxAngleX={5}
@@ -209,22 +199,22 @@ const Projects = () => {
             >
               <motion.div
                 className="project-card"
-                      data-aos="fade-up"
-                      data-aos-delay={index * 100}
+                  data-aos="fade-up"
+                  data-aos-delay={index * 100}
               >
                 <div className="project-image">
-                        {project.id === 3 ? (
-                          <img 
-                            src={isDarkMode ? project.darkModeImage : project.lightModeImage} 
-                            alt={project.title} 
-                            className="real-image" 
-                          />
-                        ) : (
-                          <img src={project.image} alt={project.title} className="real-image" />
-                        )}
-                        <div className="illustration-overlay">
-                          {project.illustration}
-                        </div>
+                    {project.id === 3 ? (
+                      <img 
+                        src={isDarkMode ? project.darkModeImage : project.lightModeImage} 
+                        alt={project.title} 
+                        className="real-image" 
+                      />
+                    ) : (
+                      <img src={project.image} alt={project.title} className="real-image" />
+                    )}
+                    <div className="illustration-overlay">
+                      {project.illustration}
+                    </div>
                 </div>
                 <div className="project-content">
                   <h3>{project.title}</h3>
@@ -235,39 +225,37 @@ const Projects = () => {
                     ))}
                   </div>
                   <div className="project-links">
-                          <MicroAnimations.AnimatedElement type="button">
+                      <MicroAnimations.AnimatedElement type="button">
                     <button
                       className="details-btn"
                       onClick={() => openModal(project.id)}
                     >
                       <FaCode /> Details
                     </button>
-                          </MicroAnimations.AnimatedElement>
-                          <MicroAnimations.AnimatedElement type="button">
-                            <a href={project.githubLink} 
-                               className="action-btn code-btn"
-                               target="_blank" 
-                               rel="noopener noreferrer">
+                      </MicroAnimations.AnimatedElement>
+                      <MicroAnimations.AnimatedElement type="button">
+                        <a href={project.githubLink} 
+                           className="action-btn code-btn"
+                           target="_blank" 
+                           rel="noopener noreferrer">
                       <FaGithub /> Code
                     </a>
-                          </MicroAnimations.AnimatedElement>
-                          <MicroAnimations.AnimatedElement type="button">
-                            <a href={project.demoLink} 
-                               className="action-btn demo-btn"
-                               target="_blank" 
-                               rel="noopener noreferrer">
+                      </MicroAnimations.AnimatedElement>
+                      <MicroAnimations.AnimatedElement type="button">
+                        <a href={project.demoLink} 
+                           className="action-btn demo-btn"
+                           target="_blank" 
+                           rel="noopener noreferrer">
                       <FaExternalLinkAlt /> Demo
                     </a>
-                          </MicroAnimations.AnimatedElement>
+                      </MicroAnimations.AnimatedElement>
                   </div>
                 </div>
               </motion.div>
             </Tilt>
-                </MicroAnimations.AnimatedCard>
+            </MicroAnimations.AnimatedCard>
           ))}
         </div>
-          )}
-        </AnimatePresence>
 
         {/* Project Modals */}
         <AnimatePresence>
