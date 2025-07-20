@@ -23,14 +23,19 @@ const About = () => {
           >
             <h3>Who am I?</h3>
             <p>
-              I'm a <strong>Computer Science undergraduate</strong> at SPSU, Udaipur with hands-on experience 
-              in full-stack development and cybersecurity. I have contributed to the design and 
-              implementation of an AI-powered News Analysis and Search Platform during a virtual 
-              internship at iNeuBytes and worked as a Node.js developer at Celebal Technologies.
+              I'm a <strong>Computer Science undergraduate</strong> at Sir Padampat Singhania University (SPSU), Udaipur, with a passion for building robust, secure, and user-centric digital solutions. My primary interests lie in full-stack development, backend engineering, and cybersecurity.
             </p>
             <p>
-              I'm skilled in JavaScript, Node.js, and integrating AI/ML models into web applications, 
-              with a passion for creating innovative solutions to complex problems.
+              During my internship at Celebal Technologies, I worked as a Node.js Developer, where I designed and deployed RESTful APIs for enterprise applications, contributing to scalable and maintainable backend architectures.
+            </p>
+            <p>
+              At iNeuBytes, I led the development of an AI-driven News Analysis platform, incorporating intelligent indexing and a clean user experience to simplify content discovery using modern web technologies.
+            </p>
+            <p>
+              I specialize in the JavaScript/React ecosystem, and have hands-on experience with Node.js, Express, MongoDB, JWT Authentication, and REST APIs. My development philosophy is centered around performance, simplicity, and intuitive design. I also explore blockchain technologies and enjoy integrating emerging tools into real-world applications.
+            </p>
+            <p>
+              I take pride in creating solutions that not only solve problems but are also easy to use and maintain. I'm always eager to learn, collaborate, and grow as a developer.
             </p>
             
             <div className="education-info">

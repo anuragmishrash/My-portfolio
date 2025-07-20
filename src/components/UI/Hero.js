@@ -121,8 +121,7 @@ const Hero = () => {
             <motion.p
               variants={itemVariants}
             >
-              Full-stack developer with experience in cybersecurity and AI integration. 
-              Currently pursuing B.Tech at SPSU, Udaipur with a focus on creating modern web applications.
+              Full-stack developer specializing in Node.js and React with industry experience through internships at Celebal Technologies and iNeuBytes. Passionate about creating secure, scalable web applications and exploring blockchain technologies. Focused on delivering elegant solutions to complex technical challenges.
             </motion.p>
             
             <motion.div 
