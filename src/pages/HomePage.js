@@ -4,6 +4,7 @@ import Hero from '../components/UI/Hero';
 import About from '../components/UI/About';
 import Skills from '../components/UI/Skills';
 import Projects from '../components/UI/Projects';
+import Internships from '../components/UI/Internships';
 import Certifications from '../components/UI/Certifications';
 import Contact from '../components/UI/Contact';
 
@@ -54,27 +55,31 @@ const HomePage = () => {
       exit="exit"
     >
       <motion.div variants={sectionVariants}>
-        <Hero />
+      <Hero />
       </motion.div>
       
       <motion.div variants={sectionVariants} data-aos="fade-up">
-        <About />
+      <About />
       </motion.div>
       
       <motion.div variants={sectionVariants} data-aos="fade-up">
-        <Skills />
+      <Skills />
       </motion.div>
       
       <motion.div variants={sectionVariants} data-aos="fade-up">
-        <Projects />
+      <Projects />
       </motion.div>
       
       <motion.div variants={sectionVariants} data-aos="fade-up">
-        <Certifications />
+        <Internships />
       </motion.div>
       
       <motion.div variants={sectionVariants} data-aos="fade-up">
-        <Contact />
+      <Certifications />
+      </motion.div>
+      
+      <motion.div variants={sectionVariants} data-aos="fade-up">
+      <Contact />
       </motion.div>
     </motion.div>
   );

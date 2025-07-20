@@ -184,4 +184,23 @@
       }
     }
   }
+}
+
+/* Hide any three-dots menu or similar elements in mobile */
+@media screen and (max-width: $breakpoint-md) {
+  /* Hide all context menus and three-dot options that might be showing */
+  .navbar-container .more-options,
+  .navbar-container [aria-label="More options"],
+  .navbar-container [role="menu"],
+  .navbar-container .three-dots,
+  .navbar-container .dots-menu {
+    display: none !important;
+  }
+  
+  /* For any injected menus via JavaScript */
+  body > div[role="menu"],
+  body > div.options-menu,
+  body > div.context-menu {
+    display: none !important;
+  }
 } 

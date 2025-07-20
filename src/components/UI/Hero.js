@@ -132,7 +132,7 @@ const Hero = () => {
               <Link to="/contact" className="btn btn-primary btn-lg btn-glow">
                 Get In Touch
               </Link>
-              <a href="Anurag Mishra Resume.pdf" download className="btn btn-outline btn-lg btn-outline-animated">
+              <a href="Resume Anurag Mishra.pdf" download className="btn btn-outline btn-lg btn-outline-animated">
                 <FaCloudDownloadAlt /> Download Resume
               </a>
             </motion.div>

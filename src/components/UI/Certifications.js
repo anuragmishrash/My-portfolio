@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaExternalLinkAlt, FaGoogle, FaEthereum } from 'react-icons/fa';
+import { FaExternalLinkAlt, FaGoogle, FaEthereum, FaNodeJs } from 'react-icons/fa';
 import './Certifications.scss';
 
 const Certifications = () => {
@@ -40,6 +40,15 @@ const Certifications = () => {
       date: 'November 2024',
       link: 'https://ineubytes.com/public/img/uploads/media/1740849194.pdf',
       description: 'Completion certificate for web development internship focused on building an AI-powered news platform.'
+    },
+    {
+      id: 5,
+      name: 'Node.js Development Internship',
+      issuer: 'Celebal Technologies',
+      icon: <FaNodeJs />,
+      date: 'August 2024',
+      link: 'https://drive.google.com/file/d/1qaKd3y1OmFHsOPWNsaATwrFzDdIcI4kK/view?usp=drivesdk',
+      description: 'Certificate of completion for Node.js development internship, working on backend systems and API development.'
     }
   ];
 

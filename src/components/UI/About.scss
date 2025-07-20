@@ -124,6 +124,10 @@
         background-color: $primary-color;
         color: $white-color;
       }
+
+      .box-link {
+        color: $primary-color;
+      }
     }
     
     .box-icon {
@@ -152,10 +156,32 @@
     p {
       color: $text-secondary;
       font-size: $font-size-sm;
-      margin: 0;
+      margin: 0 0 $spacing-1 0;
       
       .dark-mode & {
         color: rgba($text-light, 0.7);
+      }
+    }
+    
+    .box-link {
+      display: inline-block;
+      margin-top: $spacing-2;
+      font-size: $font-size-sm;
+      color: $text-secondary;
+      font-weight: 500;
+      transition: $transition-fast;
+      text-decoration: underline;
+      
+      &:hover {
+        color: $primary-color;
+      }
+      
+      .dark-mode & {
+        color: rgba($text-light, 0.6);
+        
+        &:hover {
+          color: $primary-color;
+        }
       }
     }
   }

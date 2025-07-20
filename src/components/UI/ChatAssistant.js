@@ -34,11 +34,12 @@ const ChatAssistant = () => {
     else if (commandLower.includes("about")) section = "about";
     else if (commandLower.includes("skills")) section = "skills";
     else if (commandLower.includes("projects")) section = "projects";
+    else if (commandLower.includes("internships")) section = "internships";
     else if (commandLower.includes("certifications")) section = "certifications";
     else if (commandLower.includes("contact")) section = "contact";
     else if (commandLower.includes("resume")) {
       // Open resume in new tab
-      window.open('Anurag Mishra Resume.pdf', '_blank');
+      window.open('Resume Anurag Mishra.pdf', '_blank');
       return "Opening resume in a new tab";
     }
     
@@ -78,8 +79,26 @@ const ChatAssistant = () => {
       return "Hello there! How can I help you with Anurag's portfolio today?";
     }
     
+    // Check for internships information
+    if (queryLower.includes("intern") || queryLower.includes("experience") || 
+        queryLower.includes("work")) {
+      
+      if (queryLower.includes("celebal") || queryLower.includes("node")) {
+        const internship = knowledgeBase.internships.find(i => i.company.toLowerCase().includes("celebal"));
+        return `${internship.position} at ${internship.company} (${internship.duration}):\n\n${internship.description}\n\nSkills used: ${internship.skills.join(", ")}`;
+      }
+      
+      if (queryLower.includes("ineu") || queryLower.includes("web")) {
+        const internship = knowledgeBase.internships.find(i => i.company.toLowerCase().includes("ineu"));
+        return `${internship.position} at ${internship.company} (${internship.duration}):\n\n${internship.description}\n\nSkills used: ${internship.skills.join(", ")}`;
+      }
+      
+      // General internship question
+      return `Anurag has completed ${knowledgeBase.internships.length} internships:\n\n${knowledgeBase.internships.map(i => `• ${i.position} at ${i.company} (${i.duration})`).join('\n')}\n\nYou can ask for more details about either internship or use 'Navigate to Internships' to see the full details.`;
+    }
+    
     // Check for project information
-    if (queryLower.includes("project") || queryLower.includes("work") || queryLower.includes("portfolio")) {
+    if (queryLower.includes("project") || queryLower.includes("portfolio")) {
       if (queryLower.includes("appointment") || queryLower.includes("scheduler")) {
         const project = knowledgeBase.projects.find(p => p.name.toLowerCase().includes("appointment"));
         return `${project.name}: ${project.description}\n\nTechnologies used: ${project.technologies.join(", ")}\n\nKey features:\n${project.features.map(f => "• " + f).join("\n")}`;
@@ -138,11 +157,11 @@ const ChatAssistant = () => {
     
     // Navigation help
     if (queryLower.includes("navigate") || queryLower.includes("command") || queryLower.includes("help")) {
-      return "You can navigate this portfolio by typing commands like:\n• 'Navigate to Projects'\n• 'Navigate to Skills'\n• 'Navigate to Contact'\n• 'Open Resume'\nYou can also ask me about Anurag's projects, skills, or background.";
+      return "You can navigate this portfolio by typing commands like:\n• 'Navigate to Projects'\n• 'Navigate to Skills'\n• 'Navigate to Internships'\n• 'Navigate to Contact'\n• 'Open Resume'\nYou can also ask me about Anurag's projects, internships, skills, or background.";
     }
     
     // Default response for unrecognized queries
-    return "I'm not sure about that. You can ask me about Anurag's projects, skills, background, or contact information. You can also navigate the site by typing 'Navigate to Projects'.";
+    return "I'm not sure about that. You can ask me about Anurag's projects, internships, skills, background, or contact information. You can also navigate the site by typing 'Navigate to Projects'.";
   };
 
   const handleSubmit = (e) => {

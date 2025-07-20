@@ -43,6 +43,26 @@ export const knowledgeBase = {
     }
   ],
   
+  // Internships
+  internships: [
+    {
+      position: "Node.js Developer Intern",
+      company: "Celebal Technologies",
+      duration: "May 2024 - August 2024",
+      certificate: "https://drive.google.com/file/d/1qaKd3y1OmFHsOPWNsaATwrFzDdIcI4kK/view?usp=drivesdk",
+      description: "Worked as a Node.js developer on backend systems and API development. Contributed to enterprise-level projects using modern JavaScript frameworks and server-side technologies.",
+      skills: ["Node.js", "Express.js", "MongoDB", "API Development", "Backend Architecture"]
+    },
+    {
+      position: "Web Development Intern",
+      company: "iNeuBytes",
+      duration: "September 2024 - November 2024",
+      certificate: "https://ineubytes.com/public/img/uploads/media/1740849194.pdf",
+      description: "Contributed to the design and implementation of an AI-powered News Analysis and Search Platform. Developed frontend components with React and integrated AI/ML models.",
+      skills: ["React.js", "JavaScript", "AI Integration", "Frontend Development"]
+    }
+  ],
+  
   // Skills categorized
   skills: {
     languages: ["JavaScript", "C++", "Java", "Python", "HTML/CSS", "Solidity"],

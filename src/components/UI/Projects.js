@@ -63,6 +63,24 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
+      title: 'Appointment Scheduler',
+      description: 'An interactive web application for scheduling and managing appointments with a user-friendly interface. The platform offers separate dashboards for businesses and clients with real-time availability management.',
+      lightModeImage: 'https://res.cloudinary.com/durayngkx/image/upload/v1752249909/Screenshot_2025-07-11_213202_ygcn8g.png',
+      darkModeImage: 'https://res.cloudinary.com/durayngkx/image/upload/v1752249908/Screenshot_2025-07-11_213027_xfmxc1.png',
+      technologies: ['React.js', 'Node.js', 'Express', 'MongoDB', 'JWT Authentication'],
+      githubLink: 'https://github.com/anuragmishrash/appointment-scheduler',
+      demoLink: 'https://appointment-scheduler-drab.vercel.app/',
+      illustration: <MobileDevIllustration color={isDarkMode ? '#8a6eff' : '#6e57e0'} />,
+      details: [
+        'User authentication and profile management',
+        'Business service and availability management',
+        'Appointment booking, rescheduling and tracking',
+        'Calendar integration with real-time updates',
+        'Responsive design for mobile and desktop'
+      ]
+    },
+    {
+      id: 2,
       title: 'SPSU Marketplace',
       description: 'A peer-to-peer campus item exchange platform allowing students to buy, sell, and trade items within the university community.',
       image: 'https://res.cloudinary.com/durayngkx/image/upload/v1752251232/Screenshot_2025-07-11_215510_zv0ivz.png',
@@ -78,7 +96,7 @@ const Projects = () => {
       ]
     },
     {
-      id: 2,
+      id: 3,
       title: 'Blockchain-based E-Waste Management',
       description: 'An Ethereum-powered solution for tracking and managing electronic waste sustainably with transparent record-keeping.',
       image: 'https://res.cloudinary.com/durayngkx/image/upload/v1752251208/Screenshot_2025-04-10_215513_m7ub8o.png',
@@ -91,24 +109,6 @@ const Projects = () => {
         'Integrated MetaMask for blockchain interactions',
         'Created dashboard for visualizing waste flow and recycling metrics',
         'Implemented reward system for responsible e-waste disposal'
-      ]
-    },
-    {
-      id: 3,
-      title: 'Appointment Scheduler',
-      description: 'An interactive web application for scheduling and managing appointments with a user-friendly interface. The platform offers separate dashboards for businesses and clients with real-time availability management.',
-      lightModeImage: 'https://res.cloudinary.com/durayngkx/image/upload/v1752249909/Screenshot_2025-07-11_213202_ygcn8g.png',
-      darkModeImage: 'https://res.cloudinary.com/durayngkx/image/upload/v1752249908/Screenshot_2025-07-11_213027_xfmxc1.png',
-      technologies: ['React.js', 'Node.js', 'Express', 'MongoDB', 'JWT Authentication'],
-      githubLink: 'https://github.com/anuragmishrash/appointment-scheduler',
-      demoLink: 'https://appointment-scheduler-drab.vercel.app/',
-      illustration: <MobileDevIllustration color={isDarkMode ? '#8a6eff' : '#6e57e0'} />,
-      details: [
-        'User authentication and profile management',
-        'Business service and availability management',
-        'Appointment booking, rescheduling and tracking',
-        'Calendar integration with real-time updates',
-        'Responsive design for mobile and desktop'
       ]
     }
   ];
@@ -203,7 +203,7 @@ const Projects = () => {
                   data-aos-delay={index * 100}
               >
                 <div className="project-image">
-                    {project.id === 3 ? (
+                    {project.title === 'Appointment Scheduler' ? (
                       <img 
                         src={isDarkMode ? project.darkModeImage : project.lightModeImage} 
                         alt={project.title} 
@@ -286,7 +286,7 @@ const Projects = () => {
                     <div key={`modal-content-${project.id}`}>
               <h2>{project.title}</h2>
                       <div className="modal-image">
-                        {project.id === 3 ? (
+                        {project.title === 'Appointment Scheduler' ? (
                           <img 
                             src={isDarkMode ? project.darkModeImage : project.lightModeImage} 
                             alt={project.title} 

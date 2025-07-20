@@ -7,10 +7,12 @@ import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import SkillsPage from './pages/SkillsPage';
 import ProjectsPage from './pages/ProjectsPage';
+import InternshipsPage from './pages/InternshipsPage';
 import CertificationsPage from './pages/CertificationsPage';
 import ContactPage from './pages/ContactPage';
 import CustomLoader from './components/UI/CustomLoader';
 import './assets/styles/global.scss';
+import './assets/styles/mobile-overrides.scss';
 
 // AnimatedRoutes component for page transitions
 const AnimatedRoutes = () => {
@@ -23,6 +25,7 @@ const AnimatedRoutes = () => {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/skills" element={<SkillsPage />} />
             <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/internships" element={<InternshipsPage />} />
             <Route path="/certifications" element={<CertificationsPage />} />
             <Route path="/contact" element={<ContactPage />} />
           </Routes>

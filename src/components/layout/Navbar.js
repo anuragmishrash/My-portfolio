@@ -90,6 +90,7 @@ const Navbar = () => {
               <li><Link to="/about" onClick={toggleMenu}>About</Link></li>
               <li><Link to="/skills" onClick={toggleMenu}>Skills</Link></li>
               <li><Link to="/projects" onClick={toggleMenu}>Projects</Link></li>
+              <li><Link to="/internships" onClick={toggleMenu}>Internships</Link></li>
               <li><Link to="/certifications" onClick={toggleMenu}>Certifications</Link></li>
               <li><Link to="/contact" onClick={toggleMenu}>Contact</Link></li>
             </ul>

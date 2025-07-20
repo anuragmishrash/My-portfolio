@@ -441,69 +441,89 @@
   .chat-toggle {
     bottom: 1.5rem;
     right: 1.5rem;
-    width: 3rem;
-    height: 3rem;
-    font-size: 1.3rem;
+    width: 2.8rem;
+    height: 2.8rem;
+    font-size: 1.2rem;
   }
   
   .chat-assistant {
     bottom: 5rem;
-    right: 1rem;
-    width: calc(100vw - 2rem);
-    max-width: none;
-    height: 400px; // Fixed height instead of full screen
-    max-height: 60vh; // Maximum height as percentage of viewport
+    right: 1.5rem;
+    width: 80%;
+    max-width: 300px;
+    height: 350px; // Reduced height
+    max-height: 50vh; // Maximum height as percentage of viewport
     border-radius: 1rem;
   }
   
   .chat-header {
-    padding: 0.75rem;
+    padding: 0.6rem;
     
     .chat-title {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       
       svg {
-        font-size: 1.1rem;
+        font-size: 1rem;
       }
     }
     
     .close-btn {
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
   }
   
   .chat-messages {
-    padding: 0.75rem;
-    gap: 0.6rem;
+    padding: 0.6rem;
+    gap: 0.5rem;
     
     .message {
       max-width: 90%;
-      gap: 0.5rem;
+      gap: 0.4rem;
       
       .bot-icon {
-        width: 1.8rem;
-        height: 1.8rem;
-        font-size: 0.9rem;
+        width: 1.6rem;
+        height: 1.6rem;
+        font-size: 0.8rem;
       }
       
       .message-content {
-        padding: 0.6rem 0.8rem;
-        font-size: 0.85rem;
+        padding: 0.5rem 0.7rem;
+        font-size: 0.8rem;
       }
     }
   }
   
   .chat-input {
-    padding: 0.6rem;
+    padding: 0.5rem;
     
     input {
-      padding: 0.6rem 0.8rem;
-      font-size: 0.85rem;
+      padding: 0.5rem 0.7rem;
+      font-size: 0.8rem;
     }
     
     button {
-      width: 2.2rem;
-      height: 2.2rem;
+      width: 2rem;
+      height: 2rem;
+      font-size: 0.8rem;
     }
+  }
+}
+
+// Extremely small screens
+@media screen and (max-width: 350px) {
+  .chat-assistant {
+    width: 90%;
+    right: 1rem;
+    bottom: 4.5rem;
+    height: 300px;
+    max-height: 45vh;
+  }
+  
+  .chat-toggle {
+    right: 1.2rem;
+    bottom: 1.2rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.1rem;
   }
 } 

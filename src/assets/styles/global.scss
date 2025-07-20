@@ -217,5 +217,25 @@ img {
   --border-color-rgb: 40, 40, 40;
 } 
 
+// Hide mobile three dots menu
+@media (max-width: 768px) {
+  /* Hide any three-dots menu on mobile devices */
+  body > div:not(.app):not(#root) > div[role="menu"],
+  body > div[role="menu"],
+  [aria-label*="menu"],
+  [aria-label*="option"],
+  .three-dots-menu,
+  .context-menu,
+  .mobile-options,
+  .mobile-menu:not(.navbar-menu),
+  .more-options,
+  div[style*="position: fixed"]:not(.chat-assistant):not(.navbar):not(.chat-toggle) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+} 
+
 
 

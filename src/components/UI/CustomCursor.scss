@@ -77,7 +77,7 @@
     border-color: rgba($primary-color, 0.8);
     backdrop-filter: blur(2px);
     mix-blend-mode: difference;
-    
+
     .dark-mode & {
       background-color: rgba(lighten($primary-color, 10%), 0.2);
       border-color: rgba(lighten($primary-color, 10%), 0.8);

@@ -12,8 +12,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at top left, rgba(var(--primary-color-rgb), 0.05), transparent 60%),
-                radial-gradient(circle at bottom right, rgba(var(--secondary-color-rgb), 0.05), transparent 60%);
+    background: radial-gradient(circle at top left, rgba($primary-color, 0.05), transparent 60%),
+                radial-gradient(circle at bottom right, rgba($secondary-color, 0.05), transparent 60%);
     z-index: -1;
     pointer-events: none;
   }
@@ -25,12 +25,16 @@
     h2 {
       font-size: 2.5rem;
       margin-bottom: 1rem;
-      color: var(--text-color);
-      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      color: $dark-color; /* Use dark color for light mode */
+      background: linear-gradient(45deg, $primary-color, $secondary-color);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       display: inline-block;
       position: relative;
+      
+      .dark-mode & {
+        color: $text-light; /* Use light color for dark mode */
+      }
       
       &:after {
         content: '';
@@ -39,7 +43,7 @@
         bottom: -5px;
         width: 100%;
         height: 3px;
-        background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        background: linear-gradient(to right, $primary-color, $secondary-color);
         transform: scaleX(0);
         transform-origin: left;
         animation: reveal 1s forwards;
@@ -54,9 +58,13 @@
     
     p {
       font-size: 1.1rem;
-      color: var(--text-secondary-color);
+      color: $dark-color; /* Use dark color for light mode */
       max-width: 700px;
       margin: 0 auto;
+      
+      .dark-mode & {
+        color: rgba($text-light, 0.8); /* Use light color for dark mode */
+      }
     }
   }
   
@@ -69,11 +77,11 @@
     .view-toggle-btn {
       padding: 0.6rem 1.5rem;
       border-radius: 30px;
-      border: 2px solid var(--primary-color);
-      background: transparent;
-      color: var(--text-color);
+      border: 2px solid $primary-color; /* Use primary color for border */
+      background-color: rgba($primary-color, 0.1); /* Add slight background for visibility */
+      color: $dark-color; /* Use dark color for text in light mode */
       font-size: 1rem;
-      font-weight: 500;
+      font-weight: 600; /* Make text bolder */
       cursor: pointer;
       transition: all 0.3s ease;
       display: flex;
@@ -81,17 +89,32 @@
       gap: 8px;
       outline: none;
       
+      .dark-mode & {
+        color: $text-light; /* Use light color for text in dark mode */
+        border-color: $primary-color;
+        background-color: rgba($primary-color, 0.2); /* Darker background in dark mode */
+      }
+      
       &:hover {
-        background: rgba(var(--primary-color-rgb), 0.1);
+        background-color: rgba($primary-color, 0.2);
         transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(var(--primary-color-rgb), 0.2);
+        box-shadow: 0 5px 15px rgba($primary-color, 0.2);
+        
+        .dark-mode & {
+          background-color: rgba($primary-color, 0.3);
+          box-shadow: 0 5px 15px rgba($primary-color, 0.3);
+        }
       }
       
       &.active {
-        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-        color: white;
+        background: linear-gradient(45deg, $primary-color, $secondary-color);
+        color: $white-color;
         border: 2px solid transparent;
-        box-shadow: 0 5px 15px rgba(var(--primary-color-rgb), 0.3);
+        box-shadow: 0 5px 15px rgba($primary-color, 0.3);
+        
+        .dark-mode & {
+          box-shadow: 0 5px 15px rgba($primary-color, 0.4);
+        }
       }
       
       svg {
@@ -278,13 +301,17 @@
           }
           
           .details-btn {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
+            background: linear-gradient(45deg, $primary-color, $accent-color);
+            color: $white-color;
             border: none;
-            box-shadow: 0 5px 15px rgba(var(--primary-color-rgb), 0.2);
+            box-shadow: 0 5px 15px rgba($primary-color, 0.2);
             
             &:hover {
-              box-shadow: 0 8px 20px rgba(var(--primary-color-rgb), 0.3);
+              box-shadow: 0 8px 20px rgba($primary-color, 0.3);
+            }
+            
+            .dark-mode & {
+              background: linear-gradient(45deg, $primary-color, $accent-color);
             }
           }
           
@@ -295,37 +322,37 @@
             min-width: 90px;
             
             &.code-btn {
-              background-color: #2d3748;
-              color: white;
+              background-color: $dark-color;
+              color: $white-color;
               border: none;
               
               &:hover {
-                background-color: #4a5568;
-      }
-      
-      .dark-mode & {
-                background-color: #4a5568;
-        
-        &:hover {
-                  background-color: #718096;
-        }
-      }
-    }
-    
-            &.demo-btn {
-              background-color: #1e88e5;
-              color: white;
-              border: none;
-      
-      &:hover {
-                background-color: #1976d2;
-      }
-      
-      .dark-mode & {
-                background-color: #2196f3;
+                background-color: lighten($dark-color, 10%);
+              }
+              
+              .dark-mode & {
+                background-color: $gray-color;
                 
                 &:hover {
-                  background-color: #42a5f5;
+                  background-color: lighten($gray-color, 10%);
+                }
+              }
+            }
+            
+            &.demo-btn {
+              background-color: $accent-color;
+              color: $white-color;
+              border: none;
+              
+              &:hover {
+                background-color: darken($accent-color, 10%);
+              }
+              
+              .dark-mode & {
+                background-color: lighten($accent-color, 5%);
+                
+                &:hover {
+                  background-color: lighten($accent-color, 15%);
                 }
               }
             }
@@ -350,26 +377,30 @@
   justify-content: center;
   z-index: 1000;
   padding: 1rem;
-  }
+}
   
-  .modal-content {
+.modal-content {
   position: relative;
   width: 100%;
-    max-width: 800px;
-    max-height: 90vh;
-    overflow-y: auto;
-  background: var(--bg-color);
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: $white-color; /* Use white for light mode */
+  color: $dark-color; /* Use dark color for text in light mode */
   border-radius: 15px;
   padding: 2rem;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
   
+  .dark-mode & {
+    background: $bg-dark; /* Use dark background for dark mode */
+    color: $text-light; /* Use light color for text in dark mode */
+  }
+  
   h2 {
     font-size: 2rem;
     margin-bottom: 1.5rem;
-    color: var(--text-color);
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: $primary-color;
+    font-weight: 700;
   }
   
   .modal-image {
@@ -389,26 +420,35 @@
   }
   
   .modal-description {
-    color: var(--text-secondary-color);
+    color: $dark-color; /* Use dark color for light mode */
     font-size: 1.1rem;
     line-height: 1.7;
     margin-bottom: 1.5rem;
-    border-left: 3px solid var(--primary-color);
+    border-left: 3px solid $primary-color;
     padding-left: 1rem;
+    
+    .dark-mode & {
+      color: $text-light; /* Use light color for dark mode */
+    }
   }
   
   .modal-details {
     margin-bottom: 1.5rem;
     
     h3 {
-      color: var(--text-color);
+      color: $primary-color;
       font-size: 1.3rem;
       margin-bottom: 0.8rem;
+      font-weight: 600;
     }
     
     ul {
       padding-left: 1.5rem;
-      color: var(--text-secondary-color);
+      color: $dark-color; /* Use dark color for light mode */
+      
+      .dark-mode & {
+        color: $text-light; /* Use light color for dark mode */
+      }
       
       li {
         margin-bottom: 0.5rem;
@@ -416,7 +456,7 @@
         
         &:before {
           content: '→';
-          color: var(--primary-color);
+          color: $primary-color;
           position: absolute;
           left: -1.2rem;
           top: 0;
@@ -429,9 +469,10 @@
     margin-bottom: 2rem;
     
     h3 {
-      color: var(--text-color);
+      color: $primary-color;
       font-size: 1.3rem;
       margin-bottom: 0.8rem;
+      font-weight: 600;
     }
     
     .tech-tags {
@@ -440,8 +481,8 @@
       gap: 0.5rem;
       
       .tech-tag {
-        background: rgba(var(--primary-color-rgb), 0.1);
-        color: var(--primary-color);
+        background: rgba($primary-color, 0.1);
+        color: $primary-color;
         padding: 0.4rem 1rem;
         border-radius: 20px;
         font-size: 0.9rem;
@@ -449,7 +490,7 @@
         transition: all 0.3s ease;
         
         &:hover {
-          background: rgba(var(--primary-color-rgb), 0.2);
+          background: rgba($primary-color, 0.2);
           transform: translateY(-3px);
         }
       }
@@ -475,24 +516,24 @@
       }
       
       &.btn-outline {
-        color: var(--primary-color);
-        border: 2px solid var(--primary-color);
+        color: $primary-color;
+        border: 2px solid $primary-color;
         background: transparent;
         
         &:hover {
-          background: rgba(var(--primary-color-rgb), 0.1);
+          background: rgba($primary-color, 0.1);
           transform: translateY(-3px);
         }
       }
       
       &.btn-primary {
-        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-        color: white;
+        background: linear-gradient(45deg, $primary-color, $accent-color);
+        color: $white-color;
         border: none;
-        box-shadow: 0 5px 15px rgba(var(--primary-color-rgb), 0.2);
+        box-shadow: 0 5px 15px rgba($primary-color, 0.2);
         
         &:hover {
-          box-shadow: 0 8px 20px rgba(var(--primary-color-rgb), 0.3);
+          box-shadow: 0 8px 20px rgba($primary-color, 0.3);
           transform: translateY(-3px);
         }
       }
@@ -507,8 +548,8 @@
     height: 40px;
     border-radius: 50%;
     border: none;
-    background: rgba(var(--text-color-rgb), 0.1);
-    color: var(--text-color);
+    background: rgba($dark-color, 0.1); /* Use dark color with low opacity */
+    color: $dark-color; /* Use dark color for light mode */
     font-size: 1.5rem;
     display: flex;
     align-items: center;
@@ -516,8 +557,14 @@
     cursor: pointer;
     transition: all 0.3s ease;
     
+    .dark-mode & {
+      background: rgba($text-light, 0.1); /* Use light color with low opacity */
+      color: $text-light; /* Use light color for dark mode */
+    }
+    
     &:hover {
-      background: rgba(var(--text-color-rgb), 0.2);
+      background: rgba($primary-color, 0.2);
+      color: $primary-color;
       transform: rotate(90deg);
     }
   }

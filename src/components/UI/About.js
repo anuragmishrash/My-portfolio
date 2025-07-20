@@ -26,7 +26,7 @@ const About = () => {
               I'm a <strong>Computer Science undergraduate</strong> at SPSU, Udaipur with hands-on experience 
               in full-stack development and cybersecurity. I have contributed to the design and 
               implementation of an AI-powered News Analysis and Search Platform during a virtual 
-              internship at iNeuBytes.
+              internship at iNeuBytes and worked as a Node.js developer at Celebal Technologies.
             </p>
             <p>
               I'm skilled in JavaScript, Node.js, and integrating AI/ML models into web applications, 
@@ -55,6 +55,7 @@ const About = () => {
             <div className="about-buttons">
               <Link to="/contact" className="btn btn-primary">Contact Me</Link>
               <Link to="/skills" className="btn btn-outline">My Skills</Link>
+              <Link to="/internships" className="btn btn-outline">My Internships</Link>
             </div>
           </motion.div>
           
@@ -70,7 +71,9 @@ const About = () => {
                 <FaUserTie />
               </div>
               <h4>Experience</h4>
-              <p>Web Development Intern at iNeuBytes (Sep 2024 - Nov 2024)</p>
+              <p>Node.js Dev Intern at Celebal Technologies (May-Aug 2024)</p>
+              <p>Web Dev Intern at iNeuBytes (Sep-Nov 2024)</p>
+              <Link to="/internships" className="box-link">View Details</Link>
             </div>
             
             <div className="about-box">
@@ -78,7 +81,8 @@ const About = () => {
                 <FaLaptopCode />
               </div>
               <h4>Projects</h4>
-              <p>SPSU Marketplace, Blockchain-based E-Waste Management</p>
+              <p>Appointment Scheduler, SPSU Marketplace, Blockchain-based E-Waste Management</p>
+              <Link to="/projects" className="box-link">View Details</Link>
             </div>
             
             <div className="about-box">
@@ -87,6 +91,7 @@ const About = () => {
               </div>
               <h4>Certifications</h4>
               <p>Google Cybersecurity, Data, Ethereum Blockchain, Microsoft 365 Copilot</p>
+              <Link to="/certifications" className="box-link">View Details</Link>
             </div>
           </motion.div>
         </div>
