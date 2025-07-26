@@ -98,7 +98,7 @@ const Contact = () => {
     {
       icon: <FaLinkedinIn />,
       text: 'Anurag Mishra',
-      link: 'https://www.linkedin.com/in/anurag-mishra'
+      link: 'https://www.linkedin.com/in/anurag-mishra-218b94252?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app'
     },
     {
       icon: <FaInstagram />,
