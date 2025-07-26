@@ -47,10 +47,10 @@ const Footer = () => {
         
         <div className="footer-bottom">
           <div className="social-links">
-            <a href="https://www.linkedin.com/in/anurag-mishra" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.linkedin.com/in/anurag-mishra-218b94252?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer">
               <FaLinkedinIn />
             </a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/anuragmishrash" target="_blank" rel="noopener noreferrer">
               <FaGithub />
             </a>
             <a href="mailto:itsanuragmishra99@gmail.com">

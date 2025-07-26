@@ -141,7 +141,7 @@ const Hero = () => {
               variants={itemVariants}
             >
               <motion.a 
-                href="https://www.linkedin.com/in/anurag-mishra" 
+                href="https://www.linkedin.com/in/anurag-mishra-218b94252?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.2, rotate: 5 }}
