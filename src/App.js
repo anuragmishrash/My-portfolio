@@ -17,7 +17,7 @@ import './assets/styles/mobile-overrides.scss';
 // AnimatedRoutes component for page transitions
 const AnimatedRoutes = () => {
   const location = useLocation();
-  
+
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>

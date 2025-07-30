@@ -68,7 +68,7 @@ const CustomLoader = ({ isLoading }) => {
   };
 
   // Text to be displayed under the loader
-  const text = "Loading Amazing Content";
+  const text = "Loading Anurag's Portfolio";
 
   if (!isLoading) return null;
 
