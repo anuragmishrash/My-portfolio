@@ -117,5 +117,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Contact
 
 Anurag Mishra - [itsanuragmishra99@gmail.com](mailto:itsanuragmishra99@gmail.com)
-
-Project Link: [https://github.com/yourusername/portfolio](https://github.com/yourusername/portfolio)
