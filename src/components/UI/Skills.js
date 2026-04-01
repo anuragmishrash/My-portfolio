@@ -3,33 +3,32 @@ import { motion } from 'framer-motion';
 import './Skills.scss';
 
 const Skills = () => {
-  // Programming Languages
+  // Programming Languages - Resume Aligned
   const languages = [
-    { name: 'JavaScript', percentage: 85 },
-    { name: 'C++', percentage: 80 },
+    { name: 'JavaScript', percentage: 90 },
     { name: 'Java', percentage: 75 },
-    { name: 'Python', percentage: 70 },
-    { name: 'HTML/CSS', percentage: 90 },
-    { name: 'Solidity', percentage: 65 }
+    { name: 'C++', percentage: 70 },
+    { name: 'HTML/CSS', percentage: 90 }
   ];
 
-  // Technologies and Frameworks
+  // Technologies & Frameworks - MERN + Core Stack
   const technologies = [
-    { name: 'React.js', percentage: 85 },
-    { name: 'Node.js', percentage: 80 },
-    { name: 'Express.js', percentage: 75 },
-    { name: 'MongoDB', percentage: 70 },
+    { name: 'React.js', percentage: 90 },
+    { name: 'Node.js', percentage: 85 },
+    { name: 'Express.js', percentage: 85 },
+    { name: 'MongoDB', percentage: 80 },
     { name: 'MySQL', percentage: 75 },
-    { name: 'RESTful APIs', percentage: 85 },
-    { name: 'Web3.js', percentage: 65 },
-    { name: 'AI/ML Integration', percentage: 70 }
+    { name: 'RESTful APIs', percentage: 90 },
+    { name: 'Socket.io', percentage: 85 },
+    { name: 'JWT Authentication', percentage: 85 },
+    { name: 'AI/ML Integration', percentage: 80 }
   ];
 
   const softSkills = [
     { name: 'Problem Solving', percentage: 90 },
     { name: 'Communication', percentage: 85 },
     { name: 'Team Collaboration', percentage: 90 },
-    { name: 'Time Management', percentage: 80 }
+    { name: 'Time Management', percentage: 85 }
   ];
 
   const container = {
@@ -52,7 +51,7 @@ const Skills = () => {
       <div className="container">
         <div className="section-title">
           <h2>My Skills</h2>
-          <p>Technical and professional skills that I've developed over the years</p>
+          <p>Technical and professional skills that I've developed through projects and internships</p>
         </div>
 
         <div className="skills-content">
@@ -159,15 +158,16 @@ const Skills = () => {
               <span>GitHub</span>
               <span>VS Code</span>
               <span>Postman</span>
-              <span>Blockchain</span>
-              <span>Web3</span>
-              <span>TensorFlow</span>
-              <span>NPM</span>
-              <span>Webpack</span>
-              <span>Docker</span>
-              <span>Heroku</span>
+              <span>MongoDB Atlas</span>
               <span>Vercel</span>
-              <span>AWS</span>
+              <span>Tailwind CSS</span>
+              <span>Framer Motion</span>
+              <span>Figma</span>
+              <span>Canva</span>
+              <span>React Query</span>
+              <span>Mongoose</span>
+              <span>Bcryptjs</span>
+              <span>Gemini API</span>
             </div>
           </motion.div>
         </div>

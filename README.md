@@ -34,16 +34,14 @@ This is a professional portfolio website for Anurag Mishra, showcasing his skill
 
 ## How the Contact Form Works
 
-The contact form uses a simple but effective approach:
+The contact form uses **EmailJS** for dynamic, real-time message sending directly from the client side:
 
-1. When a user fills out the contact form and clicks "Send Message", the form data is formatted into a proper email format.
-2. The user's default email client opens automatically with a pre-filled email containing:
-   - To: itsanuragmishra99@gmail.com
-   - Subject: From the form or default to "Message from [Name]"
-   - Body: Formatted message with sender's name, email, and message content
-3. The user can review the email and send it through their email client.
+1. When a user fills out the contact form and clicks "Send Message", the form is validated instantly.
+2. The data is parsed and securely sent via EmailJS using React asynchronous requests.
+3. The user gets instant visual feedback (Loading spinner -> Success Message Panel).
+4. The message correctly bypasses email clients and is delivered directly to `itsanuragmishra99@gmail.com` with Reply-To headers matching the sender's input.
 
-This approach ensures you receive messages directly from the sender's email address, making it easier to reply to them.
+This ensures a seamless, professional experience without forcing visitors to open their personal email clients.
 
 ## Technologies Used
 

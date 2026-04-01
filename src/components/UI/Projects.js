@@ -14,17 +14,16 @@ const Projects = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [show3D, setShow3D] = useState(false);
   
-  // Define skills exactly as they appear in the Skills component, but remove Git, Webpack, Docker, Heroku, Python, and AWS
+  // Skills array for 3D visualization — aligned with actual stack
   const skills = [
     // Programming Languages
-    'JavaScript', 'C++', 'Java', 'HTML/CSS', 'Solidity',
+    'JavaScript', 'Java', 'C++', 'HTML/CSS',
     
     // Technologies & Frameworks
-    'React.js', 'Node.js', 'Express.js', 'MongoDB', 'MySQL', 'RESTful APIs', 'Web3.js', 'AI/ML Integration',
+    'React.js', 'Node.js', 'Express.js', 'MongoDB', 'MySQL', 'RESTful APIs', 'Socket.io', 'JWT Auth', 'AI/ML Integration',
     
     // Tools & Ecosystems
-    'MERN Stack', 'GitHub', 'VS Code', 'Postman', 'Blockchain', 'Web3', 'TensorFlow', 'NPM', 
-    'Vercel'
+    'MERN Stack', 'GitHub', 'VS Code', 'Postman', 'MongoDB Atlas', 'Vercel', 'Tailwind CSS', 'Framer Motion', 'React Query', 'Mongoose', 'Bcryptjs', 'Gemini API'
   ];
   
   // Check if dark mode is enabled using the body class
@@ -63,6 +62,26 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
+      title: 'FeedScope AI',
+      description: 'An AI-powered multilingual feedback management platform with real-time sentiment analysis, emotion detection, and smart admin dashboards — built for organizations that need to act on feedback instantly.',
+      image: '/images/FeedScope AI Dashboard .png',
+      technologies: ['React 18', 'Node.js', 'Express', 'MongoDB', 'Python FastAPI', 'HuggingFace', 'Google Gemini API', 'Socket.io', 'JWT', 'Tailwind CSS', 'Framer Motion'],
+      githubLink: 'https://github.com/anuragmishrash/FeedScope-AI',
+      demoLink: 'https://feed-scope-ai.vercel.app/',
+      illustration: <WebDevIllustration color={isDarkMode ? '#8a6eff' : '#6e57e0'} />,
+      details: [
+        '✨ Real-time admin dashboard with animated KPI counters and [NEW] badge flash',
+        '🌍 Multilingual sentiment & emotion analysis (Hindi + English) via XLM-RoBERTa with 92.4% accuracy — no translation layer needed',
+        '🤖 On-demand AI summarization via Google Gemini 2.5 Flash with MongoDB-cached results (1hr TTL) and stale cache detection',
+        '🎫 Automated ticket progression with MongoDB TTL-based cleanup',
+        '📊 92.4% sentiment accuracy, 58ms Socket.io latency, 73.6% cache hit rate',
+        '🔐 Optional authentication + guest ticket claim via localStorage bridge',
+        '⚡ Stale cache detection with real-time Socket.io notifications',
+        '📖 Auto-progression ticket lifecycle (New → In Review → Being Resolved → Resolved) with public tracking page and guest ticket claim'
+      ]
+    },
+    {
+      id: 2,
       title: 'Appointment Scheduler',
       description: 'An interactive web application for scheduling and managing appointments with a user-friendly interface. The platform offers separate dashboards for businesses and clients with real-time availability management.',
       lightModeImage: 'https://res.cloudinary.com/durayngkx/image/upload/v1752249909/Screenshot_2025-07-11_213202_ygcn8g.png',
@@ -80,7 +99,55 @@ const Projects = () => {
       ]
     },
     {
-      id: 2,
+      id: 3,
+      title: 'Smart Bookmark',
+      description: 'A minimal, real-time bookmark manager with instant cross-tab sync, Google OAuth, and a premium glassmorphic UI — built with Next.js 15 and Supabase.',
+      image: '/images/Smart Bookmark.png',
+      technologies: ['Next.js 15', 'Supabase Auth', 'PostgreSQL', 'Supabase Realtime', 'Tailwind CSS v4', 'Framer Motion', 'TypeScript'],
+      githubLink: 'https://github.com/anuragmishrash/smart-bookmark',
+      demoLink: 'https://smart-bookmark-kohl.vercel.app/',
+      illustration: <WebDevIllustration color={isDarkMode ? '#8a6eff' : '#6e57e0'} />,
+      details: [
+        'Real-time cross-tab sync via Supabase Realtime — add or delete a bookmark in one tab and it instantly reflects everywhere',
+        'Google OAuth sign-in with Row-Level Security (RLS) ensuring each user can only access their own data',
+        'Instant search filtering bookmarks by title or URL with zero latency',
+        'Premium glassmorphic dark theme + clean high-contrast light mode, fully responsive across all devices'
+      ]
+    },
+    {
+      id: 4,
+      title: 'TaskFlow',
+      description: 'A real-time collaborative task management platform with live presence, analytics dashboards, and enterprise-grade auth — built for teams that move fast.',
+      image: '/images/TaskFlow.png',
+      technologies: ['React', 'Node.js', 'Express', 'MongoDB Atlas', 'Socket.io', 'JWT', 'bcrypt', 'React Query', 'Recharts', 'Tailwind CSS'],
+      githubLink: 'https://github.com/anuragmishrash/taskflow',
+      demoLink: 'https://task-manager-henna-psi.vercel.app/',
+      illustration: <WebDevIllustration color={isDarkMode ? '#8a6eff' : '#6e57e0'} />,
+      details: [
+        'Real-time collaboration using Socket.io — task updates and status changes reflect live across all connected users',
+        'Role-based access control (RBAC) with JWT auth and bcrypt-secured sessions',
+        'Interactive analytics dashboard with Recharts visualizing task completion trends and team workload',
+        'Full task lifecycle management with drag-and-drop boards, priority tagging, deadlines, and team assignment'
+      ]
+    },
+    {
+      id: 5,
+      title: 'Talencee — Job Portal',
+      description: 'A full-stack MERN job portal with dynamic content management, advanced job filtering, resume upload, and automated email notifications — deployed and production-ready.',
+      image: '/images/Talencee — Job Portal.png',
+      technologies: ['React 18', 'Node.js', 'Express', 'MongoDB', 'Mongoose', 'Multer', 'Nodemailer', 'Framer Motion', 'Tailwind CSS'],
+      githubLink: 'https://github.com/anuragmishrash/Talencee-Clone',
+      demoLink: 'https://talencee-clone.vercel.app/',
+      illustration: <WebDevIllustration color={isDarkMode ? '#8a6eff' : '#6e57e0'} />,
+      details: [
+        'Dynamic job listings with advanced filters for location, job type (Full-time/Internship), and work mode (Onsite/Remote/Hybrid)',
+        'Resume upload system (PDF/DOC, 5MB limit) with automated SMTP email notifications to applicant and HR',
+        'Admin CMS panel for managing hero content, services, testimonials, and job postings without any code changes',
+        'Custom animated cursor, smooth Framer Motion transitions, fully responsive across all screen sizes'
+      ]
+    },
+    {
+      id: 6,
       title: 'SPSU Marketplace',
       description: 'A peer-to-peer campus item exchange platform allowing students to buy, sell, and trade items within the university community.',
       image: 'https://res.cloudinary.com/durayngkx/image/upload/v1752251232/Screenshot_2025-07-11_215510_zv0ivz.png',
@@ -93,22 +160,6 @@ const Projects = () => {
         'Created secure transaction system with messaging functionality',
         'Designed responsive interface for mobile and desktop',
         'Built RESTful API endpoints for frontend integration'
-      ]
-    },
-    {
-      id: 3,
-      title: 'Blockchain-based E-Waste Management',
-      description: 'An Ethereum-powered solution for tracking and managing electronic waste sustainably with transparent record-keeping.',
-      image: 'https://res.cloudinary.com/durayngkx/image/upload/v1752251208/Screenshot_2025-04-10_215513_m7ub8o.png',
-      technologies: ['Solidity', 'Ganache', 'MetaMask', 'HTML', 'CSS', 'JavaScript', 'Node.js'],
-      githubLink: '#',
-      demoLink: '#',
-      illustration: <WebDevIllustration color={isDarkMode ? '#8a6eff' : '#6e57e0'} />,
-      details: [
-        'Developed smart contracts for secure e-waste tracking',
-        'Integrated MetaMask for blockchain interactions',
-        'Created dashboard for visualizing waste flow and recycling metrics',
-        'Implemented reward system for responsible e-waste disposal'
       ]
     }
   ];

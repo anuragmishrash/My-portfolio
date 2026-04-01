@@ -121,7 +121,7 @@ const Hero = () => {
             <motion.p
               variants={itemVariants}
             >
-              Full-stack developer specializing in Node.js and React with industry experience through internships at Celebal Technologies and iNeuBytes. Passionate about creating secure, scalable web applications and exploring blockchain technologies. Focused on delivering elegant solutions to complex technical challenges.
+            Full-stack MERN developer with hands-on experience from Celebal Technologies & iNeuBytes. Specialized in building AI-integrated platforms and real-time web applications. Currently developing FeedScope AI — a full-stack feedback platform with multilingual sentiment analysis and real-time admin dashboards. Focused on clean code, scalable architecture, and user-centric design.
             </motion.p>
             
             <motion.div 
