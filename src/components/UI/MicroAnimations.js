@@ -5,7 +5,6 @@ import './MicroAnimations.scss';
 // Animation provider component to be used around buttons, links, etc.
 export const AnimatedElement = ({ children, type = 'button' }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const controls = useAnimation();
 
   const buttonVariants = {
     rest: {
@@ -144,6 +143,7 @@ export const AnimatedText = ({ text, type = 'heading' }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    const currentRef = ref.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -154,13 +154,13 @@ export const AnimatedText = ({ text, type = 'heading' }) => {
       { threshold: 0.1 }
     );
     
-    if (ref.current) {
-      observer.observe(ref.current);
+    if (currentRef) {
+      observer.observe(currentRef);
     }
     
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, [controls]);
@@ -237,6 +237,7 @@ export const AnimatedCard = ({ children, delay = 0 }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    const currentRef = ref.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -247,13 +248,13 @@ export const AnimatedCard = ({ children, delay = 0 }) => {
       { threshold: 0.1 }
     );
     
-    if (ref.current) {
-      observer.observe(ref.current);
+    if (currentRef) {
+      observer.observe(currentRef);
     }
     
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, [controls]);

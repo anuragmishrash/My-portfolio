@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useMotionValue } from 'framer-motion';
 import './CustomCursor.scss';
-import { FaArrowUp } from 'react-icons/fa';
+
 
 const CustomCursor = () => {
   const cursorX = useMotionValue(-100);

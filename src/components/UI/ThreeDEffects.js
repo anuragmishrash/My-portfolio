@@ -207,11 +207,11 @@ const SkillsSphere = ({ skills }) => {
   const tools = skills.slice(14);
   
   // Combine all skills with their categories
-  const categorizedSkills = [
+  const categorizedSkills = useMemo(() => [
     ...languages.map(skill => ({ skill, category: 'language' })),
     ...technologies.map(skill => ({ skill, category: 'tech' })),
     ...tools.map(skill => ({ skill, category: 'tool' }))
-  ];
+  ], [languages, technologies, tools]);
   
   const skillsWithPositions = useMemo(() => categorizedSkills.map(({ skill, category }, i) => {
     // Distribute skills in a sphere pattern
