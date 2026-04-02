@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaRobot, FaTimes, FaPaperPlane } from 'react-icons/fa';
+import { FaRobot, FaTimes, FaPaperPlane, FaUser } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import './ChatAssistant.scss';
 import { knowledgeBase } from '../../utils/chatbotData';
@@ -7,53 +7,97 @@ import { knowledgeBase } from '../../utils/chatbotData';
 const ChatAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { text: "Hi there! I'm Anurag's portfolio assistant. How can I help you today?", isBot: true }
+    { 
+      text: "👋 Hi! I'm Anurag's AI portfolio assistant. I can help you explore his projects, skills, internships, or answer questions about his experience. Want to learn about FeedScope AI or navigate the portfolio?",
+      isBot: true 
+    }
   ]);
   const [inputValue, setInputValue] = useState('');
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
-  // Scroll to bottom when messages change
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
-  // Focus input when chat is opened
   useEffect(() => {
     if (isOpen) {
       inputRef.current?.focus();
     }
   }, [isOpen]);
 
-  // Process navigation commands
+  // Fuzzy matching helper - handles typos and variations
+  const matchesKeyword = (query, ...keywords) => {
+    return keywords.some(keyword => 
+      query.includes(keyword) || 
+      keyword.includes(query.substring(0, 3)) ||
+      levenshteinDistance(query, keyword) <= 2 // Handle typos
+    );
+  };
+
+  // Levenshtein distance for typo tolerance
+  const levenshteinDistance = (str1, str2) => {
+    const track = Array(str2.length + 1).fill(null).map(() =>
+      Array(str1.length + 1).fill(null)
+    );
+    for (let i = 0; i <= str1.length; i += 1) {
+      track[0][i] = i;
+    }
+    for (let j = 0; j <= str2.length; j += 1) {
+      track[j][0] = j;
+    }
+    for (let j = 1; j <= str2.length; j += 1) {
+      for (let i = 1; i <= str1.length; i += 1) {
+        const indicator = str1[i - 1] === str2[j - 1] ? 0 : 1;
+        track[j][i] = Math.min(
+          track[j][i - 1] + 1,
+          track[j - 1][i] + 1,
+          track[j - 1][i - 1] + indicator
+        );
+      }
+    }
+    return track[str2.length][str1.length];
+  };
+
   const processNavigation = (command) => {
     const commandLower = command.toLowerCase();
-    let section = null;
-    
-    if (commandLower.includes("home")) section = "home";
-    else if (commandLower.includes("about")) section = "about";
-    else if (commandLower.includes("skills")) section = "skills";
-    else if (commandLower.includes("projects")) section = "projects";
-    else if (commandLower.includes("internships")) section = "internships";
-    else if (commandLower.includes("certifications")) section = "certifications";
-    else if (commandLower.includes("contact")) section = "contact";
-    else if (commandLower.includes("resume")) {
-      // Open resume in new tab
-      window.open('Resume Anurag Mishra.pdf', '_blank');
-      return "Opening resume in a new tab";
+    const sections = {
+      "home": "home",
+      "hero": "home",
+      "about": "about",
+      "skill": "skills",
+      "project": "projects",
+      "port": "projects",
+      "intern": "internships",
+      "certif": "certifications",
+      "cert": "certifications",
+      "contact": "contact",
+      "get": "contact",
+      "reach": "contact"
+    };
+
+    let targetSection = null;
+    for (const [key, section] of Object.entries(sections)) {
+      if (commandLower.includes(key)) {
+        targetSection = section;
+        break;
+      }
     }
-    
-    if (section) {
-      const sectionElement = document.getElementById(section);
+
+    if (commandLower.includes("resume") || commandLower.includes("cv")) {
+      window.open('Resume Anurag Mishra.pdf', '_blank');
+      return "📄 Opening resume in a new tab!";
+    }
+
+    if (targetSection) {
+      const sectionElement = document.getElementById(targetSection);
       if (sectionElement) {
         sectionElement.scrollIntoView({ behavior: 'smooth' });
-        return `Navigating to ${section} section`;
-      } else {
-        return `Sorry, I couldn't find the ${section} section`;
+        return `✨ Navigating to ${targetSection} section...`;
       }
-    } else {
-      return "I didn't recognize that navigation command. Try typing 'Navigate to projects' or similar.";
     }
+
+    return "I didn't catch that. Try: 'Navigate to projects', 'Show me skills', 'Contact', 'Resume', or 'About'.";
   };
 
   const addMessage = (text, isBot = false) => {
@@ -61,123 +105,380 @@ const ChatAssistant = () => {
   };
 
   const generateResponse = (query) => {
-    // Convert query to lowercase for easier matching
     const queryLower = query.toLowerCase();
-    
-    // Check for navigation commands - enhanced to catch more variations
-    if (queryLower.startsWith("navigate to") || 
-        queryLower.startsWith("go to") || 
-        queryLower.startsWith("show") || 
-        queryLower.startsWith("take me to") ||
-        queryLower.startsWith("open") ||
-        queryLower.includes("scroll to")) {
+
+    // Navigation commands
+    if (queryLower.match(/^(navigate|go|show|take|open|scroll|visit)/)) {
       return processNavigation(query);
     }
-    
-    // Check for greetings
-    if (queryLower.match(/^(hi|hello|hey|greetings).*/)) {
-      return "Hello there! How can I help you with Anurag's portfolio today?";
+
+    // Greetings
+    if (queryLower.match(/^(hi|hello|hey|greet|sup|wassup)/)) {
+      return "👋 Hey there! I'm Anurag's AI assistant. I can tell you about:\n• FeedScope AI (his flagship AI project) ⭐\n• His internship experience\n• Skills and tech stack\n• Projects and achievements\n• How to contact him\n\nWhat interests you?";
     }
-    
-    // Check for internships information
-    if (queryLower.includes("intern") || queryLower.includes("experience") || 
-        queryLower.includes("work")) {
-      
-      if (queryLower.includes("celebal") || queryLower.includes("node")) {
-        const internship = knowledgeBase.internships.find(i => i.company.toLowerCase().includes("celebal"));
-        return `${internship.position} at ${internship.company} (${internship.duration}):\n\n${internship.description}\n\nSkills used: ${internship.skills.join(", ")}`;
-      }
-      
-      if (queryLower.includes("ineu") || queryLower.includes("web")) {
-        const internship = knowledgeBase.internships.find(i => i.company.toLowerCase().includes("ineu"));
-        return `${internship.position} at ${internship.company} (${internship.duration}):\n\n${internship.description}\n\nSkills used: ${internship.skills.join(", ")}`;
-      }
-      
-      // General internship question
-      return `Anurag has completed ${knowledgeBase.internships.length} internships:\n\n${knowledgeBase.internships.map(i => `• ${i.position} at ${i.company} (${i.duration})`).join('\n')}\n\nYou can ask for more details about either internship or use 'Navigate to Internships' to see the full details.`;
+
+    // =======================================
+    // FEEDSCOPE AI - FLAGSHIP PROJECT
+    // =======================================
+    if (matchesKeyword(queryLower, "feedscope", "feedback", "sentiment", "ai", "flagship", "feed", "scope")) {
+      const feedscope = knowledgeBase.projects[0];
+      return `🌟 **${feedscope.name}** - ${feedscope.type}
+
+${feedscope.description}
+
+🏆 **Key Achievements:**
+• **92.4%** sentiment analysis accuracy
+• **58ms** Socket.io real-time latency
+• **73.6%** cache hit rate
+• Multilingual (Hindi + English) support
+• Google Gemini 2.5 Flash AI integration
+• IEEE research paper with 15 references
+
+🛠️ **Tech Stack:**
+Frontend: React 18 + Vite + Tailwind CSS + Framer Motion
+Backend: Node.js + Express + Socket.io
+Database: MongoDB Atlas
+AI: Python FastAPI + HuggingFace XLM-RoBERTa + Google Gemini 2.5 Flash
+
+✨ **Key Features:**
+${feedscope.features.slice(0, 5).map(f => "• " + f).join("\n")}
+
+📖 **Academic Value:** IEEE paper + SPSU presentation
+
+🔗 GitHub: ${feedscope.links.github}
+🚀 Live Demo: ${feedscope.links.demo}
+
+This is my best work - full-stack MERN with AI! Want to know more about any specific part?`;
     }
-    
-    // Check for project information
-    if (queryLower.includes("project") || queryLower.includes("portfolio")) {
-      if (queryLower.includes("appointment") || queryLower.includes("scheduler")) {
-        const project = knowledgeBase.projects.find(p => p.name.toLowerCase().includes("appointment"));
-        return `${project.name}: ${project.description}\n\nTechnologies used: ${project.technologies.join(", ")}\n\nKey features:\n${project.features.map(f => "• " + f).join("\n")}`;
-      }
-      
-      if (queryLower.includes("marketplace") || queryLower.includes("spsu")) {
-        const project = knowledgeBase.projects.find(p => p.name.toLowerCase().includes("marketplace"));
-        return `${project.name}: ${project.description}\n\nTechnologies used: ${project.technologies.join(", ")}\n\nKey features:\n${project.features.map(f => "• " + f).join("\n")}`;
-      }
-      
-      if (queryLower.includes("blockchain") || queryLower.includes("waste") || queryLower.includes("e-waste")) {
-        const project = knowledgeBase.projects.find(p => p.name.toLowerCase().includes("blockchain"));
-        return `${project.name}: ${project.description}\n\nTechnologies used: ${project.technologies.join(", ")}\n\nKey features:\n${project.features.map(f => "• " + f).join("\n")}`;
-      }
-      
-      // General project question
-      return `Anurag has worked on several projects including:\n\n${knowledgeBase.projects.map(p => "• " + p.name).join("\n")}\n\nAsk me about a specific project for more details!`;
+
+    // =======================================
+    // APPOINTMENT SCHEDULER
+    // =======================================
+    if (matchesKeyword(queryLower, "appointment", "scheduler", "booking", "celebal")) {
+      const project = knowledgeBase.projects[1];
+      return `📅 **${project.name}** - ${project.type}
+
+${project.description}
+
+📌 **Key Features:**
+${project.features.slice(0, 5).map(f => "• " + f).join("\n")}
+
+🛠️ **Technologies:** ${project.technologies.slice(0, 8).join(", ")}
+
+✅ Built during Celebal Technologies internship (May-Aug 2024)
+🔗 **GitHub:** ${project.links.github}
+🚀 **Live Demo:** ${project.links.demo}
+
+This project shows my MERN expertise with JWT auth and RBAC!`;
     }
-    
-    // Check for skills information
-    if (queryLower.includes("skill") || queryLower.includes("know") || queryLower.includes("tech") || 
-        queryLower.includes("language") || queryLower.includes("programming")) {
-      
-      // Check for specific skill categories
-      if (queryLower.includes("language") || queryLower.includes("programming")) {
-        return `Anurag's programming languages include: ${knowledgeBase.skills.languages.join(", ")}`;
-      }
-      
-      if (queryLower.includes("tech") || queryLower.includes("framework")) {
-        return `Anurag's technologies and frameworks include: ${knowledgeBase.skills.technologies.join(", ")}`;
-      }
-      
-      if (queryLower.includes("tool")) {
-        return `Anurag's tools and ecosystems include: ${knowledgeBase.skills.tools.join(", ")}`;
-      }
-      
-      if (queryLower.includes("soft") || queryLower.includes("professional")) {
-        return `Anurag's professional skills include: ${knowledgeBase.skills.soft.join(", ")}`;
-      }
-      
-      // General skills question
-      return `Anurag has skills in:\n\n• Programming languages: ${knowledgeBase.skills.languages.join(", ")}\n\n• Technologies: ${knowledgeBase.skills.technologies.join(", ")}\n\n• Tools & Ecosystems: ${knowledgeBase.skills.tools.join(", ")}\n\n• Professional skills: ${knowledgeBase.skills.soft.join(", ")}`;
+
+    // =======================================
+    // TASKFLOW
+    // =======================================
+    if (matchesKeyword(queryLower, "taskflow", "task", "collaboration", "real-time", "socket")) {
+      const project = knowledgeBase.projects[2];
+      return `⚡ **${project.name}** - ${project.type}
+
+${project.description}
+
+📌 **Key Features:**
+${project.features.slice(0, 5).map(f => "• " + f).join("\n")}
+
+🛠️ **Technologies:** ${project.technologies.slice(0, 8).join(", ")}
+
+This project demonstrates real-time web application skills with Socket.io!
+🔗 **GitHub:** ${project.links.github}
+🚀 **Live Demo:** ${project.links.demo}`;
     }
-    
-    // Check for about/bio information
-    if (queryLower.includes("about") || queryLower.includes("who") || queryLower.includes("anurag") || 
-        queryLower.includes("introduction") || queryLower.includes("background") || queryLower.includes("bio")) {
-      return `${knowledgeBase.name} is a ${knowledgeBase.role}. ${knowledgeBase.about}`;
+
+    // =======================================
+    // SMART BOOKMARK
+    // =======================================
+    if (matchesKeyword(queryLower, "bookmark", "smart", "sync")) {
+      const project = knowledgeBase.projects[3];
+      return `🔖 **${project.name}** - ${project.type}
+
+${project.description}
+
+📌 **Key Features:**
+${project.features.slice(0, 5).map(f => "• " + f).join("\n")}
+
+🛠️ **Technologies:** ${project.technologies.slice(0, 8).join(", ")}
+
+🔗 **GitHub:** ${project.links.github}
+🚀 **Live Demo:** ${project.links.demo}`;
     }
-    
-    // Check for contact information
-    if (queryLower.includes("contact") || queryLower.includes("email") || queryLower.includes("reach") ||
-        queryLower.includes("linkedin") || queryLower.includes("github")) {
-      return `You can contact Anurag at:\n\n• Email: ${knowledgeBase.contact.email}\n• LinkedIn: ${knowledgeBase.contact.linkedin}\n• GitHub: ${knowledgeBase.contact.github}`;
+
+    // =======================================
+    // TALENCEE - JOB PORTAL
+    // =======================================
+    if (matchesKeyword(queryLower, "talencee", "job", "portal", "career")) {
+      const project = knowledgeBase.projects[4];
+      return `💼 **${project.name}** - ${project.type}
+
+${project.description}
+
+📌 **Key Features:**
+${project.features.slice(0, 5).map(f => "• " + f).join("\n")}
+
+🛠️ **Technologies:** ${project.technologies.slice(0, 8).join(", ")}
+
+🔗 **GitHub:** ${project.links.github}
+🚀 **Live Demo:** ${project.links.demo}`;
     }
-    
-    // Navigation help
-    if (queryLower.includes("navigate") || queryLower.includes("command") || queryLower.includes("help")) {
-      return "You can navigate this portfolio by typing commands like:\n• 'Navigate to Projects'\n• 'Navigate to Skills'\n• 'Navigate to Internships'\n• 'Navigate to Contact'\n• 'Open Resume'\nYou can also ask me about Anurag's projects, internships, skills, or background.";
+
+    // =======================================
+    // PROJECTS (General)
+    // =======================================
+    if (matchesKeyword(queryLower, "project", "built", "portfolio", "work", "develop")) {
+      return `🎯 **Anurag's Projects:**
+
+1. **FeedScope AI** ⭐ (Flagship!)
+   Full-stack AI feedback platform with 92.4% accuracy
+   React + Node.js + MongoDB + Python AI
+   → Ask "Tell me about FeedScope AI"
+
+2. **Appointment Scheduler**
+   MERN booking system (Celebal internship)
+   Production-ready with RBAC
+   → Ask "Tell me about Appointment Scheduler"
+
+3. **TaskFlow**
+   Real-time collaboration with Socket.io
+   Live dashboard with RBAC
+   → Ask "Tell me about TaskFlow"
+   
+4. **Smart Bookmark**
+   Next.js 15 app with real-time Supabase sync
+   → Ask "Tell me about Smart Bookmark"
+
+5. **Talencee Job Portal**
+   Full-stack MERN job portal with CMS admin
+   → Ask "Tell me about Talencee"
+
+Which one interests you? I can provide detailed info!`;
     }
-    
-    // Default response for unrecognized queries
-    return "I'm not sure about that. You can ask me about Anurag's projects, internships, skills, background, or contact information. You can also navigate the site by typing 'Navigate to Projects'.";
+
+    // =======================================
+    // INTERNSHIPS
+    // =======================================
+    if (matchesKeyword(queryLower, "intern", "experience", "work", "celebal", "ineuby", "ineubyte")) {
+      const int1 = knowledgeBase.internships[0];
+      const int2 = knowledgeBase.internships[1];
+      return `🏢 **Anurag's Internships:**
+
+**1. Node.js Developer @ ${int1.company}**
+   Duration: ${int1.duration} (${int1.durationMonths} months)
+   Project: Appointment Scheduler (Full-stack MERN)
+   Skills: Node.js, Express, MongoDB, JWT, RBAC
+   Mentors: Priyanshi Ma'am, Prerna Kamat Ma'am, Sarthak Acharjee Sir
+   📜 Certificate: ${int1.certificate}
+
+**2. Web Development @ ${int2.company}**
+   Duration: ${int2.duration} (${int2.durationMonths} months)
+   Projects: News Search Platform, AI Fake-News Detection
+   Skills: React, JavaScript, AI Integration, Flask APIs
+   Mentor: Geetha Pratyusha
+   📜 Certificate: ${int2.certificate}
+
+Both are AICTE-approved with production experience!`;
+    }
+
+    // =======================================
+    // SKILLS
+    // =======================================
+    if (matchesKeyword(queryLower, "skill", "know", "tech", "language", "programming", "stack", "expert")) {
+      return `💻 **Anurag's Tech Stack:**
+
+**Languages:**
+${knowledgeBase.skills.languages.map(s => `• ${s.name} (${s.percentage}%)`).join("\n")}
+
+**Frontend:** React.js (90%), Tailwind CSS, Framer Motion
+**Backend:** Node.js (85%), Express.js (85%), REST APIs (90%)
+**Database:** MongoDB (80%), MySQL (75%)
+**Real-time:** Socket.io (85%), JWT Auth (85%)
+**AI/ML:** HuggingFace, Google Gemini API (80%)
+
+**Tools:** ${knowledgeBase.skills.tools.slice(0, 10).join(", ")}...
+
+**Soft Skills:** ${knowledgeBase.skills.soft.map(s => s.name).join(", ")}
+
+📊 **Expertise Summary:**
+Full-stack MERN expert with AI/ML integration experience!`;
+    }
+
+    // =======================================
+    // RECRUITER PITCHES
+    // =======================================
+    if (matchesKeyword(queryLower, "hire", "role", "opportunity", "position", "job", "recruitment", "apply", "salary")) {
+      return `🎯 **Why Hire Anurag?**
+
+✅ **Experience:** 2 AICTE-approved internships (Celebal, iNeuBytes)
+✅ **Flagship Project:** FeedScope AI with 92.4% accuracy + AI integration
+✅ **Full-Stack:** React + Node.js + Express + MongoDB expert
+✅ **Real-time:** Socket.io, JWT Auth, RBAC expertise
+✅ **AI-Integrated:** HuggingFace & Google Gemini API experience
+✅ **Academic:** B.Tech CSE, SPSU (Graduating May 2026, CGPA 7.6)
+✅ **Production-Ready:** All projects deployed on Vercel
+✅ **Research:** IEEE research paper author (FeedScope AI)
+
+🎯 **Looking For:** SDE-1, Full-Stack Developer, Node.js, React roles
+💰 **Salary Floor:** ₹4 LPA
+📅 **Availability:** Immediate to June 2026
+
+📧 Email: ${knowledgeBase.contact.email}
+📱 Phone: ${knowledgeBase.contact.phone}
+💼 LinkedIn: ${knowledgeBase.contact.linkedin}
+🐙 GitHub: ${knowledgeBase.contact.github}`;
+    }
+
+    // =======================================
+    // ABOUT / BIO
+    // =======================================
+    if (matchesKeyword(queryLower, "about", "who", "anurag", "intro", "background", "bio")) {
+      return `👤 **About Anurag Mishra**
+
+${knowledgeBase.about}
+
+🎓 **Education:**
+• B.Tech Computer Science Engineering
+• Sir Padampat Singhania University (SPSU), Udaipur
+• Expected Graduation: May 2026
+• CGPA: ${knowledgeBase.education.cgpa}/${knowledgeBase.education.cgpaMax}
+
+🏆 **Key Highlights:**
+• Built FeedScope AI (92.4% sentiment accuracy)
+• 2 production internships
+• Full-stack MERN expert
+• AI/ML integration experience
+• IEEE research paper author
+
+📍 **Location:** ${knowledgeBase.contact.location}
+
+Want to know more about projects, skills, or internships?`;
+    }
+
+    // =======================================
+    // CONTACT
+    // =======================================
+    if (matchesKeyword(queryLower, "contact", "email", "reach", "linkedin", "github", "phone", "message", "connect")) {
+      return `📞 **Get in Touch with Anurag:**
+
+📧 **Email:** ${knowledgeBase.contact.email}
+📱 **Phone:** ${knowledgeBase.contact.phone}
+💼 **LinkedIn:** ${knowledgeBase.contact.linkedin}
+🐙 **GitHub:** ${knowledgeBase.contact.github}
+📍 **Location:** ${knowledgeBase.contact.location}
+
+Or use the contact form in the Contact section!
+🧭 Type 'Navigate to Contact' to go to contact form`;
+    }
+
+    // =======================================
+    // EDUCATION
+    // =======================================
+    if (matchesKeyword(queryLower, "education", "college", "university", "degree", "spsu", "graduation")) {
+      return `🎓 **Education:**
+
+**Degree:** ${knowledgeBase.education.degree}
+**University:** ${knowledgeBase.education.university}
+**Location:** ${knowledgeBase.education.location}
+**Expected Graduation:** ${knowledgeBase.education.graduationDate}
+**CGPA:** ${knowledgeBase.education.cgpa}/${knowledgeBase.education.cgpaMax}
+
+Final-year student actively pursuing SDE-1 and Full-Stack Developer roles.`;
+    }
+
+    // =======================================
+    // HELP / COMMANDS
+    // =======================================
+    if (matchesKeyword(queryLower, "help", "command", "navigate", "what can", "guide")) {
+      return `ℹ️ **Here's what I can help with:**
+
+📌 **Ask me about:**
+• "Tell me about FeedScope AI" ⭐ (Flagship project)
+• "What projects have you built?"
+• "Show me your internship experience"
+• "What's your tech stack?"
+• "Why should I hire you?" (for recruiters)
+• "How do I contact you?"
+• "Tell me about your education"
+• "What are your skills?"
+
+🧭 **Navigation commands:**
+• "Navigate to projects"
+• "Show me skills"
+• "Take me to contact"
+• "Open resume"
+• "Go to about"
+
+💡 **Pro tips:**
+• I understand variations (e.g., "feedback AI" finds "FeedScope AI")
+• Ask follow-up questions
+• Type "help" anytime
+
+Let me know how I can assist! 😊`;
+    }
+
+    // =======================================
+    // ACHIEVEMENTS & METRICS
+    // =======================================
+    if (matchesKeyword(queryLower, "metric", "achievement", "accuracy", "latency", "performance", "stat")) {
+      return `🏆 **Anurag's Key Achievements & Metrics:**
+
+**FeedScope AI:**
+• 92.4% sentiment analysis accuracy
+• 58ms Socket.io real-time latency
+• 73.6% cache hit rate
+• Multilingual support (Hindi + English)
+• IEEE research paper (15 references)
+• Google Gemini 2.5 Flash integration
+
+**Internships:**
+• 2 AICTE-approved internships (6 months total)
+• Celebal Technologies: Built production Appointment Scheduler
+• iNeuBytes: AI model integration + News platform
+
+**Academic:**
+• CGPA: 7.6/10
+• Final year (Graduating May 2026)
+• IEEE research paper author
+• Project supervisor: Prof. Dipesh Vaya
+
+Impressive metrics, right? 😊`;
+    }
+
+    // =======================================
+    // DEFAULT
+    // =======================================
+    return `Hmm, I'm not quite sure about that. Here's what I can help with:
+
+📌 **Popular questions:**
+• "Tell me about FeedScope AI"
+• "What's your tech stack?"
+• "Show me your projects"
+• "Internship experience?"
+• "Why should I hire you?"
+
+🧭 **Commands:**
+• "Navigate to projects"
+• "Show contact"
+• "Open resume"
+
+Or type 'help' for all options!`;
   };
 
   const handleSubmit = (e) => {
     e?.preventDefault();
     if (!inputValue.trim()) return;
-    
-    // Add user message
+
     addMessage(inputValue);
     
-    // Generate and add bot response (with a small delay to simulate thinking)
     setTimeout(() => {
       const response = generateResponse(inputValue);
       addMessage(response, true);
     }, 600);
-    
-    // Clear input
+
     setInputValue('');
   };
 
@@ -243,6 +544,7 @@ const ChatAssistant = () => {
                   <FaRobot />
                 </motion.div>
                 <span>Portfolio Assistant</span>
+                <span className="badge">⭐ Smart AI</span>
               </div>
               <button className="close-btn" onClick={toggleChat}>
                 <FaTimes />
@@ -268,6 +570,11 @@ const ChatAssistant = () => {
                       <FaRobot />
                     </motion.div>
                   )}
+                  {!message.isBot && (
+                    <div className="user-icon">
+                      <FaUser />
+                    </div>
+                  )}
                   <div className="message-content">
                     {message.text.split('\n').map((line, i) => (
                       <React.Fragment key={i}>
@@ -284,7 +591,7 @@ const ChatAssistant = () => {
             <form className="chat-input" onSubmit={handleSubmit}>
               <input
                 type="text"
-                placeholder="Ask me about Anurag's skills or type 'navigate to projects'..."
+                placeholder="Ask about FeedScope AI, projects, or type 'help'..."
                 value={inputValue}
                 onChange={handleInputChange}
                 ref={inputRef}
@@ -305,4 +612,4 @@ const ChatAssistant = () => {
   );
 };
 
-export default ChatAssistant; 
+export default ChatAssistant;
