@@ -228,6 +228,13 @@ ${project.features.slice(0, 5).map(f => "• " + f).join("\n")}
     }
 
     // =======================================
+    // GOLFGIVES
+    // =======================================
+    if (matchesKeyword(queryLower, 'golfgives', 'golf', 'golf gives', 'subscription', 'stripe', 'draw', 'charity', 'prize')) {
+      return "GolfGives is a full-stack subscription platform combining golf performance tracking, charity fundraising, and a monthly prize draw engine. Built with React, Node.js, MongoDB, and Stripe for payments. Features include JWT-based RBAC with subscriber and admin roles, Stripe webhook integration, a custom draw engine with jackpot rollover, real-time admin dashboard, and transactional emails via Resend. Deployed on Vercel with a Railway backend.\nLive: https://golf-gives-theta.vercel.app/ | GitHub: https://github.com/anuragmishrash/GolfGives";
+    }
+
+    // =======================================
     // PROJECTS (General)
     // =======================================
     if (matchesKeyword(queryLower, "project", "built", "portfolio", "work", "develop")) {
@@ -255,6 +262,14 @@ ${project.features.slice(0, 5).map(f => "• " + f).join("\n")}
 5. **Talencee Job Portal**
    Full-stack MERN job portal with CMS admin
    → Ask "Tell me about Talencee"
+
+6. **GolfGives**
+   Golf performance & charity platform with Stripe
+   → Ask "Tell me about GolfGives"
+
+7. **SPSU Marketplace**
+   Campus item exchange platform
+   → Ask "Tell me about SPSU Marketplace"
 
 Which one interests you? I can provide detailed info!`;
     }

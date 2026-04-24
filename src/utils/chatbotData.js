@@ -232,6 +232,35 @@ export const knowledgeBase = {
     },
     {
       id: 6,
+      name: "GolfGives",
+      type: "Personal Project",
+      description: "A subscription-driven golf performance tracking, charity fundraising, and monthly draw rewards platform. Built with a premium dark UI, full Stripe payment integration, role-based access control, real-time admin dashboard, and automated email notifications via Resend.",
+      shortDescription: "Golf performance & charity draw platform",
+      
+      technologies: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Stripe', 'JWT', 'Framer Motion', 'Tailwind CSS', 'Resend', 'Vercel'],
+      
+      highlights: [
+        "Full Stripe payment integration",
+        "Role-based access control (RBAC)",
+        "Real-time admin dashboard",
+        "Automated email notifications via Resend"
+      ],
+      
+      features: [
+        "Subscription-driven golf performance tracking",
+        "Charity fundraising and monthly draw rewards platform",
+        "Full Stripe payment integration",
+        "Real-time admin dashboard",
+        "Automated email notifications via Resend"
+      ],
+      
+      links: {
+        github: "https://github.com/anuragmishrash/GolfGives",
+        demo: "https://golf-gives-theta.vercel.app/"
+      }
+    },
+    {
+      id: 7,
       name: "SPSU Marketplace",
       type: "Academic Project",
       description: "A peer-to-peer campus item exchange platform allowing students to buy, sell, and trade items within the university community.",

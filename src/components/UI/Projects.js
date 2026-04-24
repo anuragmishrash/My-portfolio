@@ -148,6 +148,22 @@ const Projects = () => {
     },
     {
       id: 6,
+      title: 'GolfGives',
+      description: 'A subscription-driven golf performance tracking, charity fundraising, and monthly draw rewards platform. Built with a premium dark UI, full Stripe payment integration, role-based access control, real-time admin dashboard, and automated email notifications via Resend.',
+      image: '/images/GolfGives.png',
+      technologies: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Stripe', 'JWT', 'Framer Motion', 'Tailwind CSS', 'Resend', 'Vercel'],
+      githubLink: 'https://github.com/anuragmishrash/GolfGives',
+      demoLink: 'https://golf-gives-theta.vercel.app/',
+      illustration: <WebDevIllustration color={isDarkMode ? '#8a6eff' : '#6e57e0'} />,
+      details: [
+        'Full Stripe payment integration for subscriptions',
+        'Role-based access control with subscriber and admin roles',
+        'Real-time admin dashboard',
+        'Automated email notifications via Resend'
+      ]
+    },
+    {
+      id: 7,
       title: 'SPSU Marketplace',
       description: 'A peer-to-peer campus item exchange platform allowing students to buy, sell, and trade items within the university community.',
       image: 'https://res.cloudinary.com/durayngkx/image/upload/v1752251232/Screenshot_2025-07-11_215510_zv0ivz.png',
